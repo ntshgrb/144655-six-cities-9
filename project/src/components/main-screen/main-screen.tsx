@@ -1,10 +1,10 @@
 import PlaceCard from '../place-card/place-card';
 
-type MainProps = {
+type MainScreenProps = {
   placesCount: number;
 }
 
-function Main({placesCount}: MainProps): JSX.Element {
+function MainScreen({placesCount}: MainScreenProps): JSX.Element {
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
@@ -81,4 +81,4 @@ function Main({placesCount}: MainProps): JSX.Element {
   );
 }
 
-export default Main;
+export default MainScreen;
