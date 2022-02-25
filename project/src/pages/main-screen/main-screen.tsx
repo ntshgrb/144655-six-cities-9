@@ -1,10 +1,14 @@
-import PlaceCard from '../../components/place-card/place-card';
+import PlacesList from '../../components/places-list/places-list';
+import {Offer} from '../../types/offer';
+import {Review} from '../../types/review';
 
 type MainScreenProps = {
   placesCount: number;
+  offers: Offer[];
+  reviews: Review[];
 }
 
-function MainScreen({placesCount}: MainScreenProps): JSX.Element {
+function MainScreen({placesCount,offers, reviews}: MainScreenProps): JSX.Element {
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
@@ -64,13 +68,9 @@ function MainScreen({placesCount}: MainScreenProps): JSX.Element {
                 <li className="places__option" tabIndex={0}>Top rated first</li>
               </ul>
             </form>
-            <div className="cities__places-list places__list tabs__content">
-              <PlaceCard />
-              <PlaceCard />
-              <PlaceCard />
-              <PlaceCard />
-              <PlaceCard />
-            </div>
+
+            <PlacesList offers={offers} />
+
           </section>
           <div className="cities__right-section">
             <section className="cities__map map"></section>
