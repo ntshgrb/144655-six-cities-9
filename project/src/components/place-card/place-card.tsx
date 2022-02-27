@@ -1,4 +1,6 @@
+import {Link} from 'react-router-dom';
 import {Offer} from '../../types/offer';
+import {AppRoute} from '../../const';
 import {getPlaceRatingStars, getPlaceType, getButtonFavoriteClassName} from '../../utils/card';
 
 type PlaceCardProps ={
@@ -51,7 +53,7 @@ function PlaceCard({offer, onActiveCardChange}: PlaceCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{title}</a>
+          <Link to={AppRoute.Room}>{title}</Link>
         </h2>
         <p className="place-card__type">{placeType}</p>
       </div>
