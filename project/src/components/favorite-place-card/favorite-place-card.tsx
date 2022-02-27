@@ -1,4 +1,5 @@
 import {Offer} from '../../types/offer';
+import {getPlaceRatingStars, getPlaceType, getButtonFavoriteClassName} from '../../utils/card';
 
 type FavoritePlaceCardProps = {
   offer: Offer;
@@ -7,15 +8,11 @@ type FavoritePlaceCardProps = {
 function FavoritePlaceCard({offer}: FavoritePlaceCardProps): JSX.Element {
   const {previewImage, isPremium, price, rating, title, type, isFavorite} = offer;
 
-  const placeRatingStars = {
-    width: `${Math.round(rating) * 20}%`,
-  };
+  const placeRatingStars = getPlaceRatingStars(rating);
 
-  const placeType = type[0].toUpperCase() + type.slice(1);
+  const placeType = getPlaceType(type);
 
-  const buttonFavoriteClassName = isFavorite ?
-    'place-card__bookmark-button place-card__bookmark-button--active button' :
-    'place-card__bookmark-button button';
+  const buttonFavoriteClassName = getButtonFavoriteClassName(isFavorite);
 
   return (
     <article className="favorites__card place-card">
