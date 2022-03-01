@@ -8,12 +8,10 @@ type PlacesListProps = {
 
 function PlacesList ({offers}: PlacesListProps): JSX.Element {
 
-  const [activeCard, setACtiveCard] = useState(0);
+  const [, setActiveCard] = useState(0);
 
   const handleCardMouseOver = (id: number) => {
-    setACtiveCard(id);
-    // eslint-disable-next-line no-console
-    console.log(activeCard);
+    setActiveCard(id);
   };
 
   return (

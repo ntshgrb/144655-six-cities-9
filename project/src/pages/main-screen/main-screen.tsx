@@ -1,15 +1,13 @@
 import PlacesList from '../../components/places-list/places-list';
 import Header from '../../components/header/header';
 import {Offer} from '../../types/offer';
-import {Review} from '../../types/review';
 
 type MainScreenProps = {
   placesCount: number;
   offers: Offer[];
-  reviews: Review[];
 }
 
-function MainScreen({placesCount,offers, reviews}: MainScreenProps): JSX.Element {
+function MainScreen({placesCount,offers}: MainScreenProps): JSX.Element {
   return (
     <>
       <Header />

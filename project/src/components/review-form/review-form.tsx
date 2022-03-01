@@ -2,7 +2,7 @@ import {useState, ChangeEvent} from 'react';
 
 function ReviewForm(): JSX.Element {
   const [textReview, setReview] = useState('');
-  const [rateReview, setRateReview] = useState('');
+  const [, setRateReview] = useState('');
 
   const textFieldChangeHandle =(event: ChangeEvent<HTMLTextAreaElement>) => {
     const {value} = event.target;
@@ -12,8 +12,6 @@ function ReviewForm(): JSX.Element {
   const rateChangeHandle = (event: ChangeEvent<HTMLInputElement>) => {
     const {value} = event.target;
     setRateReview(value);
-    // eslint-disable-next-line no-console
-    console.log(rateReview);
   };
 
   return (
