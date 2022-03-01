@@ -1,15 +1,12 @@
-import {Link} from 'react-router-dom';
 import {Offer} from '../../types/offer';
-import {AppRoute} from '../../const';
 import {getPlaceRatingStars, getPlaceType, getButtonFavoriteClassName} from '../../utils/card';
 
-type PlaceCardProps ={
+type FavoritePlaceCardProps = {
   offer: Offer;
-  onActiveCardChange: (par: number) => void,
 }
 
-function PlaceCard({offer, onActiveCardChange}: PlaceCardProps): JSX.Element {
-  const {isPremium, previewImage, price, rating, isFavorite, title, type, id} = offer;
+function FavoritePlaceCard({offer}: FavoritePlaceCardProps): JSX.Element {
+  const {previewImage, isPremium, price, rating, title, type, isFavorite} = offer;
 
   const placeRatingStars = getPlaceRatingStars(rating);
 
@@ -18,19 +15,16 @@ function PlaceCard({offer, onActiveCardChange}: PlaceCardProps): JSX.Element {
   const buttonFavoriteClassName = getButtonFavoriteClassName(isFavorite);
 
   return (
-    <article
-      className="cities__place-card place-card"
-      onMouseOver={ ( {target}: React.MouseEvent<HTMLElement, MouseEvent>) => {onActiveCardChange(id);} }
-    >
+    <article className="favorites__card place-card">
       {
         isPremium ? <div className="place-card__mark"><span>Premium</span></div> : null
       }
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className="favorites__image-wrapper place-card__image-wrapper">
         <a href="#">
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image" />
+          <img className="place-card__image" src={previewImage} width="150" height="110" alt="Place image" />
         </a>
       </div>
-      <div className="place-card__info">
+      <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
@@ -40,7 +34,7 @@ function PlaceCard({offer, onActiveCardChange}: PlaceCardProps): JSX.Element {
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
-            <span className="visually-hidden">To bookmarks</span>
+            <span className="visually-hidden">In bookmarks</span>
           </button>
         </div>
         <div className="place-card__rating rating">
@@ -53,7 +47,7 @@ function PlaceCard({offer, onActiveCardChange}: PlaceCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`${AppRoute.RoomId}${id}`}>{title}</Link>
+          <a href="#">{title}</a>
         </h2>
         <p className="place-card__type">{placeType}</p>
       </div>
@@ -61,4 +55,4 @@ function PlaceCard({offer, onActiveCardChange}: PlaceCardProps): JSX.Element {
   );
 }
 
-export default PlaceCard;
+export default FavoritePlaceCard;
