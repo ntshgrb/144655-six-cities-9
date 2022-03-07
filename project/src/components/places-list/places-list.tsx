@@ -4,13 +4,14 @@ import {Offer} from '../../types/offer';
 
 type PlacesListProps = {
   offers: Offer[];
+  onOfferHover: (id: number) => void;
 }
 
-function PlacesList ({offers}: PlacesListProps): JSX.Element {
-
-  const [, setActiveCard] = useState(0);
+function PlacesList ({offers, onOfferHover}: PlacesListProps): JSX.Element {
+  const [activeCard, setActiveCard] = useState(0);
 
   const handleCardMouseOver = (id: number) => {
+    onOfferHover(activeCard);
     setActiveCard(id);
   };
 
