@@ -11,7 +11,7 @@ export const reviews: Review[] = [
     },
     rating: 3,
     comment: 'This villa is perfect in every way: the view on mountains and waterfalls, the hot tub and the villa itself. The evening here became a great continuation of our journeys over country.',
-    date: '2022-01-31T15:13:26.370Z',
+    date: '2022-01-30T15:13:26.370Z',
   },
   {
     id: 2,
@@ -31,7 +31,7 @@ export const reviews: Review[] = [
     id: 3,
     rating: 4,
     user: {
-      avatarUrl: 'img/1.png',
+      avatarUrl: 'https://9.react.pages.academy/static/avatar/6.jpg',
       id: 1,
       isPro: false,
       name: 'Oliver.conner',

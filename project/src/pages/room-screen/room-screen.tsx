@@ -1,6 +1,7 @@
 import ReviewForm from '../../components/review-form/review-form';
 import Header from '../../components/header/header';
 import {Offer} from '../../types/offer';
+import {Review} from '../../types/review';
 import {AppRoute} from '../../const';
 import {getPlaceRatingStars, getPlaceType} from '../../utils/card';
 import {useParams, Navigate} from 'react-router-dom';
@@ -8,9 +9,10 @@ import ReviewsList from '../../components/reviews-list/reviews-list';
 
 type RoomScreenProps = {
   offers: Offer[];
+  reviews: Review[];
 }
 
-function RoomScreen({offers}: RoomScreenProps): JSX.Element {
+function RoomScreen({offers, reviews}: RoomScreenProps): JSX.Element {
   const MAX_IMAGES_COUNT = 6;
   const params = useParams();
 
@@ -37,6 +39,8 @@ function RoomScreen({offers}: RoomScreenProps): JSX.Element {
   const placeType = getPlaceType(type);
 
   const {avatarUrl, isPro, name} = host;
+
+  const reviewsCount = reviews.length;
 
   return (
     <>
@@ -132,8 +136,8 @@ function RoomScreen({offers}: RoomScreenProps): JSX.Element {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-                <ReviewsList />
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviewsCount}</span></h2>
+                <ReviewsList reviews={reviews} />
                 <ReviewForm />
               </section>
             </div>
