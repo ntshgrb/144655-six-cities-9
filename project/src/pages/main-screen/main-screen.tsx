@@ -4,6 +4,7 @@ import Header from '../../components/header/header';
 import Map from '../../components/map/map';
 import {Offer} from '../../types/offer';
 import {MAIN_MAP_HEIGHT} from '../../map-settings';
+import {MainCardClasses} from '../../const';
 
 type MainScreenProps = {
   placesCount: number;
@@ -84,6 +85,7 @@ function MainScreen({placesCount, offers}: MainScreenProps): JSX.Element {
               <PlacesList
                 offers={offers}
                 onOfferHover={onOfferHover}
+                cardClasses={MainCardClasses}
               />
 
             </section>

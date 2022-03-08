@@ -5,10 +5,15 @@ import {getPlaceRatingStars, getPlaceType, getButtonFavoriteClassName} from '../
 
 type PlaceCardProps ={
   offer: Offer;
-  onActiveCardChange: (par: number) => void,
+  onActiveCardChange?: (id: number) => void,
+  placeCardClasses: {
+    CardClass: string,
+    ImageWrapper: string,
+    ListClass: string
+  },
 }
 
-function PlaceCard({offer, onActiveCardChange}: PlaceCardProps): JSX.Element {
+function PlaceCard({offer, onActiveCardChange, placeCardClasses}: PlaceCardProps): JSX.Element {
   const {isPremium, previewImage, price, rating, isFavorite, title, type, id} = offer;
 
   const placeRatingStars = getPlaceRatingStars(rating);
@@ -19,13 +24,13 @@ function PlaceCard({offer, onActiveCardChange}: PlaceCardProps): JSX.Element {
 
   return (
     <article
-      className="cities__place-card place-card"
-      onMouseOver={ ( {target}: React.MouseEvent<HTMLElement, MouseEvent>) => {onActiveCardChange(id);} }
+      className={`${placeCardClasses.CardClass} place-card`}
+      onMouseOver={ ( {target}: React.MouseEvent<HTMLElement, MouseEvent>) => {onActiveCardChange?.(id);} }
     >
       {
         isPremium ? <div className="place-card__mark"><span>Premium</span></div> : null
       }
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${placeCardClasses.ImageWrapper} place-card__image-wrapper`}>
         <a href="#">
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image" />
         </a>
