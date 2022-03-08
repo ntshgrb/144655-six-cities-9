@@ -1,27 +1,30 @@
-import {useEffect, useRef} from 'react';
+import {useEffect, useRef, CSSProperties} from 'react';
 import {Offer} from '../../types/offer';
 import useMap from '../../hooks/useMap';
 import leaflet from 'leaflet';
+import {iconSize, DEFAULT_PIN, ACTIVE_PIN} from '../../map-settings';
 
 type MapProps = {
   offers: Offer[];
   selectedOffer: Offer | undefined;
+  className: string;
+  mapHeight: CSSProperties;
 }
 
-function Map({offers, selectedOffer}: MapProps): JSX.Element {
+function Map({offers, selectedOffer, className, mapHeight}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef);
 
   const defaultCustomIcon = leaflet.icon({
-    iconUrl: 'img/pin.svg',
-    iconSize: [28, 39],
-    iconAnchor: [14, 39],
+    iconUrl: DEFAULT_PIN,
+    iconSize: [iconSize.Width, iconSize.Height],
+    iconAnchor: [iconSize.Width/2, iconSize.Height],
   });
 
   const currentCustomIcon = leaflet.icon({
-    iconUrl: 'img/pin-active.svg',
-    iconSize: [28, 39],
-    iconAnchor: [14, 39],
+    iconUrl: ACTIVE_PIN,
+    iconSize: [iconSize.Width, iconSize.Height],
+    iconAnchor: [iconSize.Width/2, iconSize.Height],
   });
 
   useEffect(() => {
@@ -43,7 +46,8 @@ function Map({offers, selectedOffer}: MapProps): JSX.Element {
 
   return (
     <section
-      className="cities__map map"
+      className={`${className} map`}
+      style={mapHeight}
       ref={mapRef}
     >
     </section>

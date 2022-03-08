@@ -6,6 +6,8 @@ import {AppRoute} from '../../const';
 import {getPlaceRatingStars, getPlaceType} from '../../utils/card';
 import {useParams, Navigate} from 'react-router-dom';
 import ReviewsList from '../../components/reviews-list/reviews-list';
+import Map from '../../components/map/map';
+import {PROPERTY_MAP_HEIGHT} from '../../map-settings';
 
 type RoomScreenProps = {
   offers: Offer[];
@@ -142,7 +144,12 @@ function RoomScreen({offers, reviews}: RoomScreenProps): JSX.Element {
               </section>
             </div>
           </div>
-          <section className="property__map map"></section>
+          <Map
+            offers={offers}
+            selectedOffer={currentRoom}
+            className={'property__map'}
+            mapHeight={PROPERTY_MAP_HEIGHT}
+          />
         </section>
         <div className="container">
           <section className="near-places places">

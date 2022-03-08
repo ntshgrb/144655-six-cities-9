@@ -3,6 +3,7 @@ import PlacesList from '../../components/places-list/places-list';
 import Header from '../../components/header/header';
 import Map from '../../components/map/map';
 import {Offer} from '../../types/offer';
+import {MAIN_MAP_HEIGHT} from '../../map-settings';
 
 type MainScreenProps = {
   placesCount: number;
@@ -90,6 +91,8 @@ function MainScreen({placesCount, offers}: MainScreenProps): JSX.Element {
               <Map
                 offers={offers}
                 selectedOffer={selectedOffer}
+                className={'cities__map'}
+                mapHeight={MAIN_MAP_HEIGHT}
               />
             </div>
           </div>
