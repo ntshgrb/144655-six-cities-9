@@ -2,24 +2,30 @@ import {useState} from 'react';
 import PlaceCard from '../../components/place-card/place-card';
 import {Offer} from '../../types/offer';
 
+
 type PlacesListProps = {
   offers: Offer[];
-  onOfferHover: (id: number) => void;
+  onOfferHover?: (id: number) => void;
+  cardClasses: {
+    CardClass: string,
+    ImageWrapper: string,
+    ListClass: string
+  },
 }
 
-function PlacesList ({offers, onOfferHover}: PlacesListProps): JSX.Element {
+function PlacesList ({offers, onOfferHover, cardClasses}: PlacesListProps): JSX.Element {
   const [activeCard, setActiveCard] = useState(0);
 
   const handleCardMouseOver = (id: number) => {
-    onOfferHover(activeCard);
+    onOfferHover?.(activeCard);
     setActiveCard(id);
   };
 
   return (
-    <div className="cities__places-list places__list tabs__content">
+    <div className={`${cardClasses.ListClass} places__list`}>
       {
         offers.map( (offer) => (
-          <PlaceCard key={offer.id} offer={offer} onActiveCardChange={handleCardMouseOver}/>))
+          <PlaceCard key={offer.id} offer={offer} onActiveCardChange={handleCardMouseOver} placeCardClasses={cardClasses}/>))
       }
     </div>
   );
