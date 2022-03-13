@@ -16,12 +16,14 @@ type AppScreenProps = {
 function App({reviews}: AppScreenProps): JSX.Element {
   const offers = useAppSelector((state) => state.offersList);
 
+  const currentCity = useAppSelector((state) => state.city);
+
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Root}
-          element={<MainScreen offers={offers} />}
+          element={<MainScreen offers={offers} currentCity={currentCity} />}
         />
         <Route
           path={AppRoute.Login}
