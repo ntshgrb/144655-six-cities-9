@@ -1,22 +1,29 @@
 import {useState} from 'react';
 import PlacesList from '../../components/places-list/places-list';
 import Header from '../../components/header/header';
+import CitiesList from '../../components/cities-list/cities-list';
 import Map from '../../components/map/map';
 import {Offer} from '../../types/offer';
 import {MAIN_MAP_HEIGHT} from '../../map-settings';
-import {MainCardClasses} from '../../const';
+import {MainCardClasses, citiesList} from '../../const';
+import {useAppSelector} from '../../hooks/';
+import {getCurrentOffers} from '../../utils/utils';
 
 type MainScreenProps = {
-  placesCount: number;
   offers: Offer[];
 }
 
-function MainScreen({placesCount, offers}: MainScreenProps): JSX.Element {
+function MainScreen({offers}: MainScreenProps): JSX.Element {
   const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
 
+  const currentCity = useAppSelector((state) => state.city);
+
+  const currentOffers = getCurrentOffers(currentCity, offers);
+  const placesCount = currentOffers.length;
+
   const onOfferHover = (offerId: number) => {
-    const currentOffer = offers.find((offer) => offer.id === offerId);
-    setSelectedOffer(currentOffer);
+    const activeOffer = offers.find((offer) => offer.id === offerId);
+    setSelectedOffer(activeOffer);
   };
 
 
@@ -27,45 +34,17 @@ function MainScreen({placesCount, offers}: MainScreenProps): JSX.Element {
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
-            </ul>
+            <CitiesList
+              citiesList={citiesList}
+              currentCity={currentCity}
+            />
           </section>
         </div>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{placesCount} places to stay in Amsterdam</b>
+              <b className="places__found">{placesCount} places to stay in {currentCity}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -83,7 +62,7 @@ function MainScreen({placesCount, offers}: MainScreenProps): JSX.Element {
               </form>
 
               <PlacesList
-                offers={offers}
+                offers={currentOffers}
                 onOfferHover={onOfferHover}
                 cardClasses={MainCardClasses}
               />
@@ -91,7 +70,7 @@ function MainScreen({placesCount, offers}: MainScreenProps): JSX.Element {
             </section>
             <div className="cities__right-section">
               <Map
-                offers={offers}
+                offers={currentOffers}
                 selectedOffer={selectedOffer}
                 className={'cities__map'}
                 mapHeight={MAIN_MAP_HEIGHT}

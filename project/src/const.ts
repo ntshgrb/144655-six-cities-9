@@ -23,3 +23,7 @@ export enum PropertyCardClasses {
   CardClass = 'near-places__card',
   ImageWrapper = 'near-places__image-wrapper',
 }
+
+export const citiesList = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+
+export const defaultCity = 'Paris';
