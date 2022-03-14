@@ -2,19 +2,21 @@ import {useEffect, useRef, CSSProperties} from 'react';
 import {Offer} from '../../types/offer';
 import useMap from '../../hooks/useMap';
 import leaflet from 'leaflet';
+import {City} from '../../types/city';
 import {iconSize, DEFAULT_PIN, ACTIVE_PIN} from '../../map-settings';
 
 type MapProps = {
+  currentCityInfo: City,
   offers: Offer[];
   selectedOffer: Offer | undefined;
   className: string;
   mapHeight: CSSProperties;
 }
 
-function Map({offers, selectedOffer, className, mapHeight}: MapProps): JSX.Element {
-  const city = offers[0].city;
+function Map({currentCityInfo, offers, selectedOffer, className, mapHeight}: MapProps): JSX.Element {
   const mapRef = useRef(null);
-  const map = useMap(mapRef, city);
+  const map = useMap(mapRef, currentCityInfo);
+
 
   const defaultCustomIcon = leaflet.icon({
     iconUrl: DEFAULT_PIN,
@@ -43,7 +45,7 @@ function Map({offers, selectedOffer, className, mapHeight}: MapProps): JSX.Eleme
           .addTo(map);
       });
     }
-  }, [map, offers, selectedOffer, currentCustomIcon, defaultCustomIcon]);
+  }, [currentCityInfo, map, offers, selectedOffer, currentCustomIcon, defaultCustomIcon]);
 
   return (
     <section

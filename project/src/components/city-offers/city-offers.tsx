@@ -16,6 +16,8 @@ function CityOffers ({currentOffers, placesCount, currentCity}: CityOffersProps)
 
   const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
 
+  const currentCityInfo = currentOffers[0].city;
+
   const onOfferHover = (offerId: number) => {
     const activeOffer = currentOffers.find((offer) => offer.id === offerId);
     setSelectedOffer(activeOffer);
@@ -51,6 +53,7 @@ function CityOffers ({currentOffers, placesCount, currentCity}: CityOffersProps)
       </section>
       <div className="cities__right-section">
         <Map
+          currentCityInfo={currentCityInfo}
           offers={currentOffers}
           selectedOffer={selectedOffer}
           className={'cities__map'}
