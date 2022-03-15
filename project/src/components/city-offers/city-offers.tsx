@@ -53,6 +53,7 @@ function CityOffers ({currentOffers, placesCount, currentCity}: CityOffersProps)
       </section>
       <div className="cities__right-section">
         <Map
+          key={currentCity}
           currentCityInfo={currentCityInfo}
           offers={currentOffers}
           selectedOffer={selectedOffer}
