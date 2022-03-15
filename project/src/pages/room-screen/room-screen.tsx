@@ -147,6 +147,7 @@ function RoomScreen({offers, reviews}: RoomScreenProps): JSX.Element {
             </div>
           </div>
           <Map
+            currentCityInfo={currentRoom.city}
             offers={offers}
             selectedOffer={currentRoom}
             className={'property__map'}
