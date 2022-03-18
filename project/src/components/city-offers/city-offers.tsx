@@ -3,8 +3,9 @@ import PlacesList from '../places-list/places-list';
 import Map from '../map/map';
 import PlacesSorting from '../places-sorting/places-sorting';
 import {Offer} from '../../types/offer';
-import {MainCardClasses} from '../../const';
+import {MainCardClasses, SortingTypes} from '../../const';
 import {MAIN_MAP_HEIGHT} from '../../map-settings';
+import {sortOffers} from '../../utils/utils';
 
 
 type CityOffersProps = {
@@ -16,6 +17,7 @@ type CityOffersProps = {
 function CityOffers ({currentOffers, placesCount, currentCity}: CityOffersProps): JSX.Element {
 
   const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
+  const [placesSorting, setplacesSorting] = useState<string>(SortingTypes.Popular);
 
   const currentCityInfo = currentOffers[0].city;
 
@@ -24,16 +26,25 @@ function CityOffers ({currentOffers, placesCount, currentCity}: CityOffersProps)
     setSelectedOffer(activeOffer);
   };
 
+  const handleSortingChange = (sortingType: string) => {
+    setplacesSorting(sortingType);
+  };
+
+  const sortedCurrentOffers = sortOffers([...currentOffers], placesSorting);
+
   return (
     <>
       <section className="cities__places places">
         <h2 className="visually-hidden">Places</h2>
         <b className="places__found">{placesCount} places to stay in {currentCity}</b>
 
-        <PlacesSorting />
+        <PlacesSorting
+          handleSortingChange={handleSortingChange}
+          placesSorting={placesSorting}
+        />
 
         <PlacesList
-          offers={currentOffers}
+          offers={sortedCurrentOffers}
           onOfferHover={onOfferHover}
           cardClasses={MainCardClasses}
         />
@@ -44,7 +55,7 @@ function CityOffers ({currentOffers, placesCount, currentCity}: CityOffersProps)
         <Map
           key={currentCity}
           currentCityInfo={currentCityInfo}
-          offers={currentOffers}
+          offers={sortedCurrentOffers}
           selectedOffer={selectedOffer}
           className={'cities__map'}
           mapHeight={MAIN_MAP_HEIGHT}
