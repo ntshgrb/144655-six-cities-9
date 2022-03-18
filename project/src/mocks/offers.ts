@@ -65,8 +65,8 @@ export const offers: Offer[] = [
     city: {
       name: 'Paris',
       location: {
-        latitude: 50.938361,
-        longitude: 6.959974,
+        latitude: 48.85661,
+        longitude: 2.351499,
         zoom: 13,
       },
     },
@@ -125,8 +125,8 @@ export const offers: Offer[] = [
     city: {
       name: 'Paris',
       location: {
-        latitude: 50.938361,
-        longitude: 6.959974,
+        latitude: 48.85661,
+        longitude: 2.351499,
         zoom: 13,
       },
     },

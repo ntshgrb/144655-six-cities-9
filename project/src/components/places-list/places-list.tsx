@@ -5,7 +5,7 @@ import {Offer} from '../../types/offer';
 
 type PlacesListProps = {
   offers: Offer[];
-  onOfferHover?: (id: number) => void;
+  handleOfferHover?: (id: number) => void;
   cardClasses: {
     CardClass: string,
     ImageWrapper: string,
@@ -13,11 +13,11 @@ type PlacesListProps = {
   },
 }
 
-function PlacesList ({offers, onOfferHover, cardClasses}: PlacesListProps): JSX.Element {
+function PlacesList ({offers, handleOfferHover, cardClasses}: PlacesListProps): JSX.Element {
   const [activeCard, setActiveCard] = useState(0);
 
   const handleCardMouseOver = (id: number) => {
-    onOfferHover?.(activeCard);
+    handleOfferHover?.(activeCard);
     setActiveCard(id);
   };
 

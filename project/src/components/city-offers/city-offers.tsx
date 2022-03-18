@@ -21,7 +21,7 @@ function CityOffers ({currentOffers, placesCount, currentCity}: CityOffersProps)
 
   const currentCityInfo = currentOffers[0].city;
 
-  const onOfferHover = (offerId: number) => {
+  const handleOfferHover = (offerId: number) => {
     const activeOffer = currentOffers.find((offer) => offer.id === offerId);
     setSelectedOffer(activeOffer);
   };
@@ -45,7 +45,7 @@ function CityOffers ({currentOffers, placesCount, currentCity}: CityOffersProps)
 
         <PlacesList
           offers={sortedCurrentOffers}
-          onOfferHover={onOfferHover}
+          handleOfferHover={handleOfferHover}
           cardClasses={MainCardClasses}
         />
 
