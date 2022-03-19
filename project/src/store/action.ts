@@ -3,6 +3,6 @@ import {Offer} from '../types/offer';
 
 const changeCityAction = createAction<string>('main/changeCity');
 
-const setOffersListAction = createAction<Offer[]>('main/setOffersList');
+const loadOffers = createAction<Offer[]>('data/loadOffers');
 
-export {changeCityAction, setOffersListAction};
+export {changeCityAction, loadOffers};
