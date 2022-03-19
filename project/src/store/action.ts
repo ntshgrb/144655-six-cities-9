@@ -5,4 +5,6 @@ const changeCityAction = createAction<string>('main/changeCity');
 
 const loadOffers = createAction<Offer[]>('data/loadOffers');
 
-export {changeCityAction, loadOffers};
+const setError = createAction<string>('main/setError');
+
+export {changeCityAction, loadOffers, setError};
