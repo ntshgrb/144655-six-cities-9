@@ -9,10 +9,10 @@ type PlacesSortingProps = {
 function PlacesSorting ({handleSortingChange, placesSorting}: PlacesSortingProps): JSX.Element {
   const isSortingTypeActive = (currentType: string) => placesSorting === currentType;
 
-  const [listIsActive, setListActve] = useState(false);
+  const [listIsActive, setListActive] = useState(false);
 
   const toggleListState = () => {
-    setListActve(!listIsActive);
+    setListActive(!listIsActive);
   };
 
   return (
