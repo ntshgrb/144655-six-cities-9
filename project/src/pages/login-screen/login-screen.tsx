@@ -1,17 +1,14 @@
 import {useRef, FormEvent} from 'react';
 import {useDispatch} from 'react-redux';
-import {useNavigate} from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 import {loginAction} from '../../store/api-actions';
 import {AuthData} from '../../types/auth-data';
-import {AppRoute} from '../../const';
 
 function LoginScreen(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const onSubmit = (authData: AuthData) => dispatch(loginAction(authData));
 
@@ -28,7 +25,7 @@ function LoginScreen(): JSX.Element {
     }
   };
 
-  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
     if (loginRef.current !== null && passwordRef.current !== null) {
@@ -36,7 +33,6 @@ function LoginScreen(): JSX.Element {
         login: loginRef.current.value,
         password: passwordRef.current.value,
       });
-      navigate(AppRoute.Root);
     }
   };
 
@@ -57,7 +53,7 @@ function LoginScreen(): JSX.Element {
             <h1 className="login__title">Sign in</h1>
 
             <form
-              onSubmit={handleSubmit}
+              onSubmit={handleFormSubmit}
               className="login__form form"
               action="#"
               method="post"
