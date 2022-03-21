@@ -1,13 +1,22 @@
+import {Navigate} from 'react-router-dom';
 import FavoritePlaceCard from '../../components/favorite-place-card/favorite-place-card';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import {Offer} from '../../types/offer';
+import {useAppSelector} from '../../hooks/index';
+import {AppRoute, AuthorizationStatus} from '../../const';
 
 type FavoritesScreenProps = {
   offers: Offer[];
 }
 
 function FavoritesScreen({offers}: FavoritesScreenProps): JSX.Element {
+  const authStatus = useAppSelector((state) => state.authorizationStatus);
+
+  if (authStatus !== AuthorizationStatus.Auth) {
+    return <Navigate to={AppRoute.Login} />;
+  }
+
   const favoriteOffers = offers.filter((offer) => offer.isFavorite);
 
   const favoriteCities = Array.from(new Set(favoriteOffers.map(({city}) => city.name)));

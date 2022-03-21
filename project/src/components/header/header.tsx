@@ -1,6 +1,6 @@
 import Logo from '../logo/logo';
 import HeaderNavigationAuth from './header-navigation-auth';
-import HeaderNavigationNoAuth from './header-no-auth';
+import HeaderNavigationNoAuth from './header-navigation-no-auth';
 import {useAppSelector} from '../../hooks/';
 import {AuthorizationStatus} from '../../const';
 
