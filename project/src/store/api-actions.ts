@@ -5,6 +5,9 @@ import {store} from '../store';
 import {Offer} from '../types/offer';
 import {loadOffers, setError, requireAuthorization} from './action';
 import {errorHandle} from '../sevrices/error-handle';
+import {AuthData} from '../types/auth-data';
+// import {UserData} from '../types/user-data';
+import {saveToken} from '../sevrices/token';
 
 export const fetchOffersAction = createAsyncThunk(
   'data/loadOffers',
@@ -23,6 +26,20 @@ export const checkAuthAction = createAsyncThunk(
   async () => {
     try {
       await api.get(APIRoute.Login);
+      store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    } catch (error) {
+      errorHandle(error);
+      store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    }
+  },
+);
+
+export const loginAction = createAsyncThunk(
+  'user/login',
+  async ({login: email, password}: AuthData) => {
+    try {
+      const {data: {token}} = await api.post(APIRoute.Login, {email, password});
+      saveToken(token);
       store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
     } catch (error) {
       errorHandle(error);
