@@ -22,4 +22,12 @@ const sortOffers = (offersList: Offer[], sortType: string) => {
   }
 };
 
-export {getCurrentOffers, isOffersListEmpty, sortOffers};
+const isEmpty = (value: string): boolean => {
+  if (value.trim() === '') {
+    return true;
+  }
+  return false;
+};
+
+
+export {getCurrentOffers, isOffersListEmpty, sortOffers, isEmpty};

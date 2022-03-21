@@ -5,9 +5,10 @@ import App from './components/app/app';
 import ErrorMessage from './components/error-message/error-message';
 import {reviews} from './mocks/reviews';
 import {store} from './store/';
-import {fetchOffersAction} from './store/api-actions';
+import {fetchOffersAction, checkAuthAction} from './store/api-actions';
 
 store.dispatch(fetchOffersAction());
+store.dispatch(checkAuthAction());
 
 ReactDOM.render(
   <React.StrictMode>

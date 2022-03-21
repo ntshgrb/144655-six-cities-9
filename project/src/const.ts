@@ -39,6 +39,8 @@ export enum SortingTypes {
 
 export enum APIRoute {
   Offers = '/hotels',
+  Login = '/login',
+  Logout = '/logout',
 }
 
 export enum HTTP_CODE {
