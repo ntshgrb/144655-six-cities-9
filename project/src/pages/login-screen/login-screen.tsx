@@ -3,6 +3,7 @@ import {useDispatch} from 'react-redux';
 import Logo from '../../components/logo/logo';
 import {loginAction} from '../../store/api-actions';
 import {AuthData} from '../../types/auth-data';
+import {isEmpty} from '../../utils/utils';
 
 function LoginScreen(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
@@ -11,13 +12,6 @@ function LoginScreen(): JSX.Element {
   const dispatch = useDispatch();
 
   const onSubmit = (authData: AuthData) => dispatch(loginAction(authData));
-
-  const isEmpty = (value: string): boolean => {
-    if (value.trim() === '') {
-      return true;
-    }
-    return false;
-  };
 
   const onPasswordChange = () => {
     if (passwordRef.current !== null && isEmpty(passwordRef.current.value)) {
