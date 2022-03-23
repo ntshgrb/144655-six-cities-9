@@ -1,34 +1,42 @@
+import {useDispatch} from 'react-redux';
+import {useEffect} from 'react';
+import {useAppSelector} from '../../hooks';
 import ReviewForm from '../../components/review-form/review-form';
 import Header from '../../components/header/header';
 import PlacesList from '../../components/places-list/places-list';
 import {Offer} from '../../types/offer';
 import {Review} from '../../types/review';
-import {AppRoute} from '../../const';
 import {getPlaceRatingStars, getPlaceType} from '../../utils/card';
-import {useParams, Navigate} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import ReviewsList from '../../components/reviews-list/reviews-list';
 import Map from '../../components/map/map';
 import {PROPERTY_MAP_HEIGHT} from '../../map-settings';
 import {PropertyCardClasses} from '../../const';
+import {fetchOfferAction, fetchReviewsAction} from '../../store/api-actions';
 
 type RoomScreenProps = {
   offers: Offer[];
   reviews: Review[];
 }
 
-function RoomScreen({offers, reviews}: RoomScreenProps): JSX.Element {
+function RoomScreen({offers, reviews}: RoomScreenProps): JSX.Element | null {
   const MAX_IMAGES_COUNT = 6;
+
+  const dispatch = useDispatch();
   const params = useParams();
 
-  if (!params.id) {
-    return <Navigate to={AppRoute.Root} />;
-  }
+  const currentRoom = useAppSelector((state) => state.currentOffer);
+  const currentRoomReviews = useAppSelector((state) => state.currenOfferReviews);
 
-  const currenRoomId = +params.id;
-  const currentRoom = offers.find((offer) => offer.id === currenRoomId);
+  useEffect(() => {
+    if (params.id) {
+      dispatch(fetchOfferAction(+params.id));
+      dispatch(fetchReviewsAction(+params.id));
+    }
+  }, [params.id, dispatch]);
 
-  if (!currentRoom) {
-    return <Navigate to={AppRoute.Root} />;
+  if (currentRoom === null) {
+    return null;
   }
 
   const {images, isPremium, title, isFavorite, rating, type, bedrooms, maxAdults, price, goods, description, host} = currentRoom;
@@ -44,7 +52,7 @@ function RoomScreen({offers, reviews}: RoomScreenProps): JSX.Element {
 
   const {avatarUrl, isPro, name} = host;
 
-  const reviewsCount = reviews.length;
+  const reviewsCount = currentRoomReviews.length;
 
   return (
     <>

@@ -3,10 +3,11 @@ import {APIRoute, TIMEOUT_SHOW_ERROR, AuthorizationStatus, AppRoute} from '../co
 import {api} from '../store';
 import {store} from '../store';
 import {Offer} from '../types/offer';
-import {loadOffers, setError, requireAuthorization, redirectToRoute} from './action';
+import {loadOffers, loadOffer, loadReviews, setError, requireAuthorization, redirectToRoute} from './action';
 import {errorHandle} from '../sevrices/error-handle';
 import {AuthData} from '../types/auth-data';
 import {saveToken} from '../sevrices/token';
+import {Review} from '../types/review';
 
 export const fetchOffersAction = createAsyncThunk(
   'data/loadOffers',
@@ -14,6 +15,30 @@ export const fetchOffersAction = createAsyncThunk(
     try {
       const {data} = await api.get<Offer[]>(APIRoute.Offers);
       store.dispatch(loadOffers(data));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const fetchOfferAction = createAsyncThunk(
+  'data/loadOffer',
+  async (offerId: number) => {
+    try {
+      const {data} = await api.get<Offer>(`${APIRoute.Offers}/${offerId}`);
+      store.dispatch(loadOffer(data));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const fetchReviewsAction = createAsyncThunk(
+  'data/loadReview',
+  async(offerId: number) => {
+    try {
+      const {data} = await api.get<Review[]>(`${APIRoute.Comments}/${offerId}`);
+      store.dispatch(loadReviews(data));
     } catch (error) {
       errorHandle(error);
     }
