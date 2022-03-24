@@ -11,7 +11,7 @@ import ReviewsList from '../../components/reviews-list/reviews-list';
 import Map from '../../components/map/map';
 import {PROPERTY_MAP_HEIGHT} from '../../map-settings';
 import {PropertyCardClasses} from '../../const';
-import {fetchOfferAction, fetchReviewsAction} from '../../store/api-actions';
+import {fetchNearbyOffersAction, fetchOfferAction, fetchReviewsAction} from '../../store/api-actions';
 
 type RoomScreenProps = {
   offers: Offer[];
@@ -25,11 +25,13 @@ function RoomScreen({offers}: RoomScreenProps): JSX.Element | null {
 
   const currentRoom = useAppSelector((state) => state.offers.currentOffer);
   const currentRoomReviews = useAppSelector((state) => state.offers.currenOfferReviews);
+  const nearbyOffers = useAppSelector((state) => state.offers.nearbyOffers);
 
   useEffect(() => {
     if (params.id) {
       dispatch(fetchOfferAction(+params.id));
       dispatch(fetchReviewsAction(+params.id));
+      dispatch(fetchNearbyOffersAction(+params.id));
     }
   }, [params.id, dispatch]);
 
@@ -154,7 +156,7 @@ function RoomScreen({offers}: RoomScreenProps): JSX.Element | null {
           </div>
           <Map
             currentCityInfo={currentRoom.city}
-            offers={offers}
+            offers={[currentRoom, ...nearbyOffers]}
             selectedOffer={currentRoom}
             className={'property__map'}
             mapHeight={PROPERTY_MAP_HEIGHT}
@@ -164,7 +166,7 @@ function RoomScreen({offers}: RoomScreenProps): JSX.Element | null {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <PlacesList
-              offers={offers.slice(0, 3)}
+              offers={nearbyOffers.slice(0, 3)}
               cardClasses={PropertyCardClasses}
             />
           </section>

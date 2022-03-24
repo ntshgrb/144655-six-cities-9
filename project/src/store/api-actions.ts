@@ -4,7 +4,7 @@ import {api} from '../store';
 import {store} from '../store';
 import {Offer} from '../types/offer';
 import {redirectToRoute} from './action';
-import {loadOffers, loadOffer, loadReviews} from './reducers/offers';
+import {loadOffers, loadOffer, loadReviews, loadNearbyOffers} from './reducers/offers';
 import {setError, requireAuthorization} from './reducers/utility';
 import {errorHandle} from '../sevrices/error-handle';
 import {AuthData} from '../types/auth-data';
@@ -41,6 +41,18 @@ export const fetchReviewsAction = createAsyncThunk(
     try {
       const {data} = await api.get<Review[]>(`${APIRoute.Comments}/${offerId}`);
       store.dispatch(loadReviews(data));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const fetchNearbyOffersAction = createAsyncThunk(
+  'data/loadNearbyOffers',
+  async(offerId: number) => {
+    try {
+      const {data} = await api.get<Offer[]>(`${APIRoute.Offers}/${offerId}/nearby`);
+      store.dispatch(loadNearbyOffers(data));
     } catch (error) {
       errorHandle(error);
     }
