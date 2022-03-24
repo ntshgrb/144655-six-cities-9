@@ -5,7 +5,6 @@ import ReviewForm from '../../components/review-form/review-form';
 import Header from '../../components/header/header';
 import PlacesList from '../../components/places-list/places-list';
 import {Offer} from '../../types/offer';
-import {Review} from '../../types/review';
 import {getPlaceRatingStars, getPlaceType} from '../../utils/card';
 import {useParams} from 'react-router-dom';
 import ReviewsList from '../../components/reviews-list/reviews-list';
@@ -16,10 +15,9 @@ import {fetchOfferAction, fetchReviewsAction} from '../../store/api-actions';
 
 type RoomScreenProps = {
   offers: Offer[];
-  reviews: Review[];
 }
 
-function RoomScreen({offers, reviews}: RoomScreenProps): JSX.Element | null {
+function RoomScreen({offers}: RoomScreenProps): JSX.Element | null {
   const MAX_IMAGES_COUNT = 6;
 
   const dispatch = useDispatch();
@@ -149,7 +147,7 @@ function RoomScreen({offers, reviews}: RoomScreenProps): JSX.Element | null {
               </div>
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviewsCount}</span></h2>
-                <ReviewsList reviews={reviews} />
+                <ReviewsList reviews={currentRoomReviews} />
                 <ReviewForm />
               </section>
             </div>
