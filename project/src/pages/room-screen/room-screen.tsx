@@ -25,8 +25,8 @@ function RoomScreen({offers, reviews}: RoomScreenProps): JSX.Element | null {
   const dispatch = useDispatch();
   const params = useParams();
 
-  const currentRoom = useAppSelector((state) => state.currentOffer);
-  const currentRoomReviews = useAppSelector((state) => state.currenOfferReviews);
+  const currentRoom = useAppSelector((state) => state.offers.currentOffer);
+  const currentRoomReviews = useAppSelector((state) => state.offers.currenOfferReviews);
 
   useEffect(() => {
     if (params.id) {

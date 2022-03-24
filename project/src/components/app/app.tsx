@@ -18,10 +18,10 @@ type AppScreenProps = {
 }
 
 function App({reviews}: AppScreenProps): JSX.Element {
-  const offers = useAppSelector((state) => state.offersList);
-  const isDataLoaded = useAppSelector((state) => state.isDataLoaded);
+  const offers = useAppSelector((state) => state.offers.offersList);
+  const isDataLoaded = useAppSelector((state) => state.offers.isDataLoaded);
 
-  const currentCity = useAppSelector((state) => state.city);
+  const currentCity = useAppSelector((state) => state.offers.city);
 
   if (!isDataLoaded) {
     return (

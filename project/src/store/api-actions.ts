@@ -3,7 +3,9 @@ import {APIRoute, TIMEOUT_SHOW_ERROR, AuthorizationStatus, AppRoute} from '../co
 import {api} from '../store';
 import {store} from '../store';
 import {Offer} from '../types/offer';
-import {loadOffers, loadOffer, loadReviews, setError, requireAuthorization, redirectToRoute} from './action';
+import {redirectToRoute} from './action';
+import {loadOffers, loadOffer, loadReviews} from './reducers/offers';
+import {setError, requireAuthorization} from './reducers/utility';
 import {errorHandle} from '../sevrices/error-handle';
 import {AuthData} from '../types/auth-data';
 import {saveToken} from '../sevrices/token';

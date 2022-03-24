@@ -11,7 +11,7 @@ type FavoritesScreenProps = {
 }
 
 function FavoritesScreen({offers}: FavoritesScreenProps): JSX.Element {
-  const authStatus = useAppSelector((state) => state.authorizationStatus);
+  const authStatus = useAppSelector((state) => state.utility.authorizationStatus);
 
   if (authStatus !== AuthorizationStatus.Auth) {
     return <Navigate to={AppRoute.Login} />;

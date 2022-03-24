@@ -28,7 +28,7 @@ export enum PropertyCardClasses {
 
 export const citiesList = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
-export const defaultCity = 'Paris';
+export const DEFAULT_CITY = 'Paris';
 
 export enum SortingTypes {
   Popular = 'Popular',

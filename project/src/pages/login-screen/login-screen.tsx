@@ -14,7 +14,7 @@ function LoginScreen(): JSX.Element {
 
   const dispatch = useDispatch();
 
-  const authStatus = useAppSelector((state) => state.authorizationStatus);
+  const authStatus = useAppSelector((state) => state.utility.authorizationStatus);
 
   if (authStatus === AuthorizationStatus.Auth) {
     return <Navigate to={AppRoute.Root} />;
