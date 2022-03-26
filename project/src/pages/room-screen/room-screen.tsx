@@ -10,7 +10,7 @@ import {useParams} from 'react-router-dom';
 import ReviewsList from '../../components/reviews-list/reviews-list';
 import Map from '../../components/map/map';
 import {PROPERTY_MAP_HEIGHT} from '../../map-settings';
-import {PropertyCardClasses} from '../../const';
+import {AuthorizationStatus, PropertyCardClasses} from '../../const';
 import {fetchNearbyOffersAction, fetchOfferAction, fetchReviewsAction} from '../../store/api-actions';
 
 type RoomScreenProps = {
@@ -26,6 +26,7 @@ function RoomScreen({offers}: RoomScreenProps): JSX.Element | null {
   const currentRoom = useAppSelector((state) => state.offers.currentOffer);
   const currentRoomReviews = useAppSelector((state) => state.offers.currenOfferReviews);
   const nearbyOffers = useAppSelector((state) => state.offers.nearbyOffers);
+  const authorizationStatus = useAppSelector((state) => state.utility.authorizationStatus);
 
   useEffect(() => {
     if (params.id) {
@@ -150,7 +151,11 @@ function RoomScreen({offers}: RoomScreenProps): JSX.Element | null {
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviewsCount}</span></h2>
                 <ReviewsList reviews={currentRoomReviews} />
-                <ReviewForm id={id} />
+                {
+                  authorizationStatus === AuthorizationStatus.Auth
+                    ? <ReviewForm id={id} />
+                    : null
+                }
               </section>
             </div>
           </div>
