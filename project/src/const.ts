@@ -50,3 +50,31 @@ export enum HTTP_CODE {
   UNAUTHORIZED = 401,
   NOT_FOUND = 404,
 }
+
+export enum ReviewLength {
+  MinReviewLength = 50,
+  MaxReviewLength = 300,
+}
+
+export const REVIEW_RATE = [
+  {
+    value: 5,
+    rating: 'perfect',
+  },
+  {
+    value: 4,
+    rating: 'good',
+  },
+  {
+    value: 3,
+    rating: 'not bad',
+  },
+  {
+    value: 2,
+    rating: 'badly',
+  },
+  {
+    value: 1,
+    rating: 'terribly',
+  },
+];
