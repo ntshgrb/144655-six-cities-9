@@ -5,7 +5,7 @@ import {store} from '../store';
 import {Offer} from '../types/offer';
 import {redirectToRoute} from './action';
 import {loadOffers, loadOffer, loadReviews, sendReviews, loadNearbyOffers} from './reducers/offers';
-import {setError, requireAuthorization} from './reducers/utility';
+import {setError, requireAuthorization, setUserEmail} from './reducers/utility';
 import {errorHandle} from '../sevrices/error-handle';
 import {AuthData} from '../types/auth-data';
 import {saveToken} from '../sevrices/token';
@@ -77,8 +77,9 @@ export const loginAction = createAsyncThunk(
   'user/login',
   async ({login: email, password}: AuthData) => {
     try {
-      const {data: {token}} = await api.post(APIRoute.Login, {email, password});
-      saveToken(token);
+      const {data} = await api.post(APIRoute.Login, {email, password});
+      saveToken(data.token);
+      store.dispatch(setUserEmail(data.email));
       store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
       store.dispatch(redirectToRoute(AppRoute.Root));
     } catch (error) {
