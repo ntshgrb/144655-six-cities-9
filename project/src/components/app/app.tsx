@@ -6,22 +6,16 @@ import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import RoomScreen from '../../pages/room-screen/room-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
-import {Review} from '../../types/review';
 import {useAppSelector} from '../../hooks/';
 import LoadingScreen from '../loading-screen/loading-screen';
 import HistoryRouter from '../history-router/history-router';
 import browserHistory from '../../browser-history';
 
+function App(): JSX.Element {
+  const offers = useAppSelector((state) => state.offers.offersList);
+  const isDataLoaded = useAppSelector((state) => state.offers.isDataLoaded);
 
-type AppScreenProps = {
-  reviews: Review[];
-}
-
-function App({reviews}: AppScreenProps): JSX.Element {
-  const offers = useAppSelector((state) => state.offersList);
-  const isDataLoaded = useAppSelector((state) => state.isDataLoaded);
-
-  const currentCity = useAppSelector((state) => state.city);
+  const currentCity = useAppSelector((state) => state.offers.city);
 
   if (!isDataLoaded) {
     return (
@@ -50,7 +44,7 @@ function App({reviews}: AppScreenProps): JSX.Element {
         />
         <Route
           path={AppRoute.Room}
-          element={<RoomScreen offers={offers} reviews={reviews} />}
+          element={<RoomScreen offers={offers} />}
         />
         <Route
           path='*'

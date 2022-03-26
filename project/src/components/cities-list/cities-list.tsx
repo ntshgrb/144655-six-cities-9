@@ -1,4 +1,4 @@
-import {changeCityAction} from '../../store/action';
+import {changeCityAction} from '../../store/reducers/offers';
 import {useAppDispatch} from '../../hooks/';
 
 type CitiesListProps = {

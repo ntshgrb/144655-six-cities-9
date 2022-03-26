@@ -1,9 +1,11 @@
 import request from 'axios';
 import {store} from '../store';
-import {setError} from '../store/action';
+import {setError} from '../store/reducers/utility';
 import {ErrorType} from '../types/error';
 import {clearErrorAction} from '../store/api-actions';
-import {HTTP_CODE} from '../const';
+import {HTTP_CODE, AppRoute} from '../const';
+import {redirectToRoute} from '../store/action';
+
 
 export const errorHandle = (error: ErrorType): void => {
   if (!request.isAxiosError(error)) {
@@ -26,6 +28,7 @@ export const errorHandle = (error: ErrorType): void => {
         handleError(response.data.error);
         break;
       case HTTP_CODE.NOT_FOUND:
+        store.dispatch(redirectToRoute(AppRoute.NotFound));
         handleError(response.data.error);
         break;
     }

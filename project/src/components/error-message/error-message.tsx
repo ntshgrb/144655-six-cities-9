@@ -1,7 +1,7 @@
 import {useAppSelector} from '../../hooks';
 
 function ErrorMessage(): JSX.Element | null {
-  const error = useAppSelector((state) => state.error);
+  const error = useAppSelector((state) => state.utility.error);
 
   if (error) {
     return (

@@ -3,10 +3,15 @@ import {APIRoute, TIMEOUT_SHOW_ERROR, AuthorizationStatus, AppRoute} from '../co
 import {api} from '../store';
 import {store} from '../store';
 import {Offer} from '../types/offer';
-import {loadOffers, setError, requireAuthorization, redirectToRoute} from './action';
+import {redirectToRoute} from './action';
+import {loadOffers, loadOffer, loadReviews, sendReviews, loadNearbyOffers} from './reducers/offers';
+import {setError, requireAuthorization} from './reducers/utility';
 import {errorHandle} from '../sevrices/error-handle';
 import {AuthData} from '../types/auth-data';
 import {saveToken} from '../sevrices/token';
+import {Review} from '../types/review';
+import {NewReview} from '../types/new-review';
+import {saveUserEmail} from '../sevrices/user-email';
 
 export const fetchOffersAction = createAsyncThunk(
   'data/loadOffers',
@@ -14,6 +19,42 @@ export const fetchOffersAction = createAsyncThunk(
     try {
       const {data} = await api.get<Offer[]>(APIRoute.Offers);
       store.dispatch(loadOffers(data));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const fetchOfferAction = createAsyncThunk(
+  'data/loadOffer',
+  async (offerId: number) => {
+    try {
+      const {data} = await api.get<Offer>(`${APIRoute.Offers}/${offerId}`);
+      store.dispatch(loadOffer(data));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const fetchReviewsAction = createAsyncThunk(
+  'data/loadReview',
+  async(offerId: number) => {
+    try {
+      const {data} = await api.get<Review[]>(`${APIRoute.Comments}/${offerId}`);
+      store.dispatch(loadReviews(data));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const fetchNearbyOffersAction = createAsyncThunk(
+  'data/loadNearbyOffers',
+  async(offerId: number) => {
+    try {
+      const {data} = await api.get<Offer[]>(`${APIRoute.Offers}/${offerId}/nearby`);
+      store.dispatch(loadNearbyOffers(data));
     } catch (error) {
       errorHandle(error);
     }
@@ -37,13 +78,26 @@ export const loginAction = createAsyncThunk(
   'user/login',
   async ({login: email, password}: AuthData) => {
     try {
-      const {data: {token}} = await api.post(APIRoute.Login, {email, password});
-      saveToken(token);
+      const {data} = await api.post(APIRoute.Login, {email, password});
+      saveToken(data.token);
+      saveUserEmail(data.email);
       store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
       store.dispatch(redirectToRoute(AppRoute.Root));
     } catch (error) {
       errorHandle(error);
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    }
+  },
+);
+
+export const postReviewAction = createAsyncThunk(
+  'data/postReview',
+  async ({comment, rating, offerId}: NewReview) => {
+    try {
+      const {data} = await api.post(`${APIRoute.Comments}/${offerId}`, {comment, rating});
+      store.dispatch(sendReviews(data));
+    } catch (error) {
+      errorHandle(error);
     }
   },
 );

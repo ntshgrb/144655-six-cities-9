@@ -1,37 +1,46 @@
+import {useDispatch} from 'react-redux';
+import {useEffect} from 'react';
+import {useAppSelector} from '../../hooks';
 import ReviewForm from '../../components/review-form/review-form';
 import Header from '../../components/header/header';
 import PlacesList from '../../components/places-list/places-list';
 import {Offer} from '../../types/offer';
-import {Review} from '../../types/review';
-import {AppRoute} from '../../const';
 import {getPlaceRatingStars, getPlaceType} from '../../utils/card';
-import {useParams, Navigate} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import ReviewsList from '../../components/reviews-list/reviews-list';
 import Map from '../../components/map/map';
 import {PROPERTY_MAP_HEIGHT} from '../../map-settings';
-import {PropertyCardClasses} from '../../const';
+import {AuthorizationStatus, PropertyCardClasses} from '../../const';
+import {fetchNearbyOffersAction, fetchOfferAction, fetchReviewsAction} from '../../store/api-actions';
 
 type RoomScreenProps = {
   offers: Offer[];
-  reviews: Review[];
 }
 
-function RoomScreen({offers, reviews}: RoomScreenProps): JSX.Element {
+function RoomScreen({offers}: RoomScreenProps): JSX.Element | null {
   const MAX_IMAGES_COUNT = 6;
+
+  const dispatch = useDispatch();
   const params = useParams();
 
-  if (!params.id) {
-    return <Navigate to={AppRoute.Root} />;
+  const currentRoom = useAppSelector((state) => state.offers.currentOffer);
+  const currentRoomReviews = useAppSelector((state) => state.offers.currenOfferReviews);
+  const nearbyOffers = useAppSelector((state) => state.offers.nearbyOffers);
+  const authorizationStatus = useAppSelector((state) => state.utility.authorizationStatus);
+
+  useEffect(() => {
+    if (params.id) {
+      dispatch(fetchOfferAction(+params.id));
+      dispatch(fetchReviewsAction(+params.id));
+      dispatch(fetchNearbyOffersAction(+params.id));
+    }
+  }, [params.id, dispatch]);
+
+  if (currentRoom === null) {
+    return null;
   }
 
-  const currenRoomId = +params.id;
-  const currentRoom = offers.find((offer) => offer.id === currenRoomId);
-
-  if (!currentRoom) {
-    return <Navigate to={AppRoute.Root} />;
-  }
-
-  const {images, isPremium, title, isFavorite, rating, type, bedrooms, maxAdults, price, goods, description, host} = currentRoom;
+  const {images, isPremium, title, isFavorite, rating, type, bedrooms, maxAdults, price, goods, description, host, id} = currentRoom;
 
   let imagesToRender = images;
 
@@ -44,10 +53,10 @@ function RoomScreen({offers, reviews}: RoomScreenProps): JSX.Element {
 
   const {avatarUrl, isPro, name} = host;
 
-  const reviewsCount = reviews.length;
+  const reviewsCount = currentRoomReviews.length;
 
   return (
-    <>
+    <div className='page'>
       <Header />
       <main className="page__main page__main--property">
         <section className="property">
@@ -141,14 +150,18 @@ function RoomScreen({offers, reviews}: RoomScreenProps): JSX.Element {
               </div>
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviewsCount}</span></h2>
-                <ReviewsList reviews={reviews} />
-                <ReviewForm />
+                <ReviewsList reviews={currentRoomReviews} />
+                {
+                  authorizationStatus === AuthorizationStatus.Auth
+                    ? <ReviewForm id={id} />
+                    : null
+                }
               </section>
             </div>
           </div>
           <Map
             currentCityInfo={currentRoom.city}
-            offers={offers}
+            offers={[currentRoom, ...nearbyOffers]}
             selectedOffer={currentRoom}
             className={'property__map'}
             mapHeight={PROPERTY_MAP_HEIGHT}
@@ -158,13 +171,13 @@ function RoomScreen({offers, reviews}: RoomScreenProps): JSX.Element {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <PlacesList
-              offers={offers.slice(0, 3)}
+              offers={nearbyOffers.slice(0, 3)}
               cardClasses={PropertyCardClasses}
             />
           </section>
         </div>
       </main>
-    </>
+    </div>
   );
 }
 

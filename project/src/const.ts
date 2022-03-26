@@ -6,6 +6,7 @@ export enum AppRoute {
   Favorites = '/favorites',
   RoomId = '/offer/',
   Room = '/offer/:id',
+  NotFound = '/notfound',
 }
 
 export enum AuthorizationStatus {
@@ -28,7 +29,7 @@ export enum PropertyCardClasses {
 
 export const citiesList = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
-export const defaultCity = 'Paris';
+export const DEFAULT_CITY = 'Paris';
 
 export enum SortingTypes {
   Popular = 'Popular',
@@ -41,6 +42,7 @@ export enum APIRoute {
   Offers = '/hotels',
   Login = '/login',
   Logout = '/logout',
+  Comments = '/comments',
 }
 
 export enum HTTP_CODE {
@@ -48,3 +50,31 @@ export enum HTTP_CODE {
   UNAUTHORIZED = 401,
   NOT_FOUND = 404,
 }
+
+export enum ReviewLength {
+  MinReviewLength = 50,
+  MaxReviewLength = 300,
+}
+
+export const REVIEW_RATE = [
+  {
+    value: 5,
+    rating: 'perfect',
+  },
+  {
+    value: 4,
+    rating: 'good',
+  },
+  {
+    value: 3,
+    rating: 'not bad',
+  },
+  {
+    value: 2,
+    rating: 'badly',
+  },
+  {
+    value: 1,
+    rating: 'terribly',
+  },
+];
