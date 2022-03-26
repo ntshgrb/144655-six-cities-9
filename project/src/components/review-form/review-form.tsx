@@ -1,10 +1,18 @@
-import {useState, ChangeEvent} from 'react';
+import {useState, ChangeEvent, FormEvent} from 'react';
+import {useDispatch} from 'react-redux';
+import {postReviewAction} from '../../store/api-actions';
+import {NewReview} from '../../types/new-review';
 
-function ReviewForm(): JSX.Element {
+type ReviewFormProps = {
+  id: number,
+}
+
+function ReviewForm({id}: ReviewFormProps): JSX.Element {
   const [textReview, setReview] = useState('');
-  const [, setRateReview] = useState('');
+  const [rate, setRateReview] = useState('');
+  const dispatch = useDispatch();
 
-  const textFieldChangeHandle =(event: ChangeEvent<HTMLTextAreaElement>) => {
+  const textFieldChangeHandle = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const {value} = event.target;
     setReview(value);
   };
@@ -14,10 +22,24 @@ function ReviewForm(): JSX.Element {
     setRateReview(value);
   };
 
+  const onSubmit = (data: NewReview) => dispatch(postReviewAction(data));
+
+  const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    onSubmit({offerId: id, comment: textReview, rating: +rate});
+  };
+
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form
+      onSubmit={handleFormSubmit}
+      className="reviews__form form"
+      action="#"
+      method="post"
+    >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
+
         <input onChange={rateChangeHandle} className="form__rating-input visually-hidden" name="rating" value="5" id="5-stars" type="radio" />
         <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
           <svg className="form__star-image" width="37" height="33">
@@ -53,6 +75,7 @@ function ReviewForm(): JSX.Element {
           </svg>
         </label>
       </div>
+
       <textarea onChange={textFieldChangeHandle} className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" value={textReview}></textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">

@@ -38,10 +38,13 @@ export const offers = createSlice({
     loadReviews: (state, action) => {
       state.currenOfferReviews = action.payload;
     },
+    sendReviews: (state, action) => {
+      state.currenOfferReviews = action.payload;
+    },
     loadNearbyOffers: (state, action) => {
       state.nearbyOffers = action.payload;
     },
   },
 });
 
-export const {changeCityAction, loadOffers, loadOffer, loadReviews, loadNearbyOffers} = offers.actions;
+export const {changeCityAction, loadOffers, loadOffer, loadReviews, sendReviews, loadNearbyOffers} = offers.actions;

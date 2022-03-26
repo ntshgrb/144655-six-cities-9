@@ -39,7 +39,7 @@ function RoomScreen({offers}: RoomScreenProps): JSX.Element | null {
     return null;
   }
 
-  const {images, isPremium, title, isFavorite, rating, type, bedrooms, maxAdults, price, goods, description, host} = currentRoom;
+  const {images, isPremium, title, isFavorite, rating, type, bedrooms, maxAdults, price, goods, description, host, id} = currentRoom;
 
   let imagesToRender = images;
 
@@ -150,7 +150,7 @@ function RoomScreen({offers}: RoomScreenProps): JSX.Element | null {
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviewsCount}</span></h2>
                 <ReviewsList reviews={currentRoomReviews} />
-                <ReviewForm />
+                <ReviewForm id={id} />
               </section>
             </div>
           </div>

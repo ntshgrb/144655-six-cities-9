@@ -4,12 +4,13 @@ import {api} from '../store';
 import {store} from '../store';
 import {Offer} from '../types/offer';
 import {redirectToRoute} from './action';
-import {loadOffers, loadOffer, loadReviews, loadNearbyOffers} from './reducers/offers';
+import {loadOffers, loadOffer, loadReviews, sendReviews, loadNearbyOffers} from './reducers/offers';
 import {setError, requireAuthorization} from './reducers/utility';
 import {errorHandle} from '../sevrices/error-handle';
 import {AuthData} from '../types/auth-data';
 import {saveToken} from '../sevrices/token';
 import {Review} from '../types/review';
+import {NewReview} from '../types/new-review';
 
 export const fetchOffersAction = createAsyncThunk(
   'data/loadOffers',
@@ -83,6 +84,18 @@ export const loginAction = createAsyncThunk(
     } catch (error) {
       errorHandle(error);
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    }
+  },
+);
+
+export const postReviewAction = createAsyncThunk(
+  'data/postReview',
+  async ({comment, rating, offerId}: NewReview) => {
+    try {
+      const {data} = await api.post(`${APIRoute.Comments}/${offerId}`, {comment, rating});
+      store.dispatch(sendReviews(data));
+    } catch (error) {
+      errorHandle(error);
     }
   },
 );
