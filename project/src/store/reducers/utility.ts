@@ -4,13 +4,11 @@ import {AuthorizationStatus} from '../../const';
 type InitialState = {
   error: string,
   authorizationStatus: AuthorizationStatus,
-  userEmail: string,
 }
 
 const initialState: InitialState = {
   error: '',
   authorizationStatus: AuthorizationStatus.Unknown,
-  userEmail: '',
 };
 
 export const utility = createSlice({
@@ -23,10 +21,7 @@ export const utility = createSlice({
     requireAuthorization: (state, action) => {
       state.authorizationStatus = action.payload;
     },
-    setUserEmail: (state, action) => {
-      state.userEmail = action.payload;
-    },
   },
 });
 
-export const {setError, requireAuthorization, setUserEmail} = utility.actions;
+export const {setError, requireAuthorization} = utility.actions;

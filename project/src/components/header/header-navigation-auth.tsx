@@ -1,9 +1,9 @@
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
-import {useAppSelector} from '../../hooks/index';
+import {getUserEmail} from '../../sevrices/user-email';
 
 function HeaderNavigationAuth ():JSX.Element {
-  const userEmail = useAppSelector((state) => state.utility.userEmail);
+  const email = getUserEmail();
 
   return (
     <ul className="header__nav-list">
@@ -11,7 +11,7 @@ function HeaderNavigationAuth ():JSX.Element {
         <Link to={AppRoute.Favorites} className="header__nav-link header__nav-link--profile">
           <div className="header__avatar-wrapper user__avatar-wrapper">
           </div>
-          <span className="header__user-name user__name">{userEmail}</span>
+          <span className="header__user-name user__name">{email}</span>
         </Link>
       </li>
       <li className="header__nav-item">

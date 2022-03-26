@@ -5,12 +5,13 @@ import {store} from '../store';
 import {Offer} from '../types/offer';
 import {redirectToRoute} from './action';
 import {loadOffers, loadOffer, loadReviews, sendReviews, loadNearbyOffers} from './reducers/offers';
-import {setError, requireAuthorization, setUserEmail} from './reducers/utility';
+import {setError, requireAuthorization} from './reducers/utility';
 import {errorHandle} from '../sevrices/error-handle';
 import {AuthData} from '../types/auth-data';
 import {saveToken} from '../sevrices/token';
 import {Review} from '../types/review';
 import {NewReview} from '../types/new-review';
+import {saveUserEmail} from '../sevrices/user-email';
 
 export const fetchOffersAction = createAsyncThunk(
   'data/loadOffers',
@@ -79,7 +80,7 @@ export const loginAction = createAsyncThunk(
     try {
       const {data} = await api.post(APIRoute.Login, {email, password});
       saveToken(data.token);
-      store.dispatch(setUserEmail(data.email));
+      saveUserEmail(data.email);
       store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
       store.dispatch(redirectToRoute(AppRoute.Root));
     } catch (error) {
