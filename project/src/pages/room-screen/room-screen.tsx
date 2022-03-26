@@ -56,7 +56,7 @@ function RoomScreen({offers}: RoomScreenProps): JSX.Element | null {
   const reviewsCount = currentRoomReviews.length;
 
   return (
-    <>
+    <div className='page'>
       <Header />
       <main className="page__main page__main--property">
         <section className="property">
@@ -177,7 +177,7 @@ function RoomScreen({offers}: RoomScreenProps): JSX.Element | null {
           </section>
         </div>
       </main>
-    </>
+    </div>
   );
 }
 
