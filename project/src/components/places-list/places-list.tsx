@@ -25,7 +25,12 @@ function PlacesList ({offers, handleOfferHover, cardClasses}: PlacesListProps): 
     <div className={`${cardClasses.ListClass} places__list`}>
       {
         offers.map( (offer) => (
-          <PlaceCard key={offer.id} offer={offer} onActiveCardChange={handleCardMouseOver} placeCardClasses={cardClasses}/>))
+          <PlaceCard
+            key={offer.id}
+            offer={offer}
+            onActiveCardChange={handleCardMouseOver}
+            placeCardClasses={cardClasses}
+          />))
       }
     </div>
   );
