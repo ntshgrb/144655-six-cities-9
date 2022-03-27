@@ -1,5 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {AuthorizationStatus} from '../../const';
+import {NameSpaces} from '../../const';
 
 type InitialState = {
   error: string,
@@ -12,7 +13,7 @@ const initialState: InitialState = {
 };
 
 export const utility = createSlice({
-  name: 'utility',
+  name: NameSpaces.utility,
   initialState,
   reducers: {
     setError: (state, action) => {

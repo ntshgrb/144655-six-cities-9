@@ -78,3 +78,9 @@ export const REVIEW_RATE = [
     rating: 'terribly',
   },
 ];
+
+export enum NameSpaces {
+  offers = 'OFFERS',
+  reviews = 'REVIEWS',
+  utility = 'UTILITY'
+}

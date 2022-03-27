@@ -5,15 +5,18 @@ import {citiesList} from '../../const';
 import {getCurrentOffers, isOffersListEmpty} from '../../utils/utils';
 import CityOffers from '../../components/city-offers/city-offers';
 import CityOffersEmpty from '../../components/city-offers/city-offers-empty';
+import { useAppSelector } from '../../hooks';
 
 type MainScreenProps = {
   offers: Offer[];
-  currentCity: string,
 }
 
-function MainScreen({offers, currentCity}: MainScreenProps): JSX.Element {
+function MainScreen({offers}: MainScreenProps): JSX.Element {
+  const currentCity = useAppSelector((state) => state.OFFERS.city);
+
   const currentOffers = getCurrentOffers(currentCity, offers);
   const placesCount = currentOffers.length;
+
 
   return (
     <div className="page page--gray page--main">

@@ -12,6 +12,7 @@ import Map from '../../components/map/map';
 import {PROPERTY_MAP_HEIGHT} from '../../map-settings';
 import {AuthorizationStatus, PropertyCardClasses} from '../../const';
 import {fetchNearbyOffersAction, fetchOfferAction, fetchReviewsAction} from '../../store/api-actions';
+import RoomFeatures from '../../components/room-features/room-features';
 
 type RoomScreenProps = {
   offers: Offer[];
@@ -23,10 +24,10 @@ function RoomScreen({offers}: RoomScreenProps): JSX.Element | null {
   const dispatch = useDispatch();
   const params = useParams();
 
-  const currentRoom = useAppSelector((state) => state.offers.currentOffer);
-  const currentRoomReviews = useAppSelector((state) => state.offers.currenOfferReviews);
-  const nearbyOffers = useAppSelector((state) => state.offers.nearbyOffers);
-  const authorizationStatus = useAppSelector((state) => state.utility.authorizationStatus);
+  const currentRoom = useAppSelector((state) => state.OFFERS.currentOffer);
+  const currentRoomReviews = useAppSelector((state) => state.REVIEWS.currenOfferReviews);
+  const nearbyOffers = useAppSelector((state) => state.OFFERS.nearbyOffers);
+  const authorizationStatus = useAppSelector((state) => state.UTILITY.authorizationStatus);
 
   useEffect(() => {
     if (params.id) {
@@ -80,7 +81,6 @@ function RoomScreen({offers}: RoomScreenProps): JSX.Element | null {
                   </div>
                   : null
               }
-
               <div className="property__name-wrapper">
                 <h1 className="property__name">
                   {title}
@@ -102,17 +102,13 @@ function RoomScreen({offers}: RoomScreenProps): JSX.Element | null {
                 </div>
                 <span className="property__rating-value rating__value">{rating}</span>
               </div>
-              <ul className="property__features">
-                <li className="property__feature property__feature--entire">
-                  {placeType}
-                </li>
-                <li className="property__feature property__feature--bedrooms">
-                  {bedrooms} Bedrooms
-                </li>
-                <li className="property__feature property__feature--adults">
-                  Max {maxAdults} adults
-                </li>
-              </ul>
+
+              <RoomFeatures
+                placeType={placeType}
+                bedrooms={bedrooms}
+                maxAdults={maxAdults}
+              />
+
               <div className="property__price">
                 <b className="property__price-value">&euro;{price}</b>
                 <span className="property__price-text">&nbsp;night</span>

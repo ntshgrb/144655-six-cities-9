@@ -12,10 +12,8 @@ import HistoryRouter from '../history-router/history-router';
 import browserHistory from '../../browser-history';
 
 function App(): JSX.Element {
-  const offers = useAppSelector((state) => state.offers.offersList);
-  const isDataLoaded = useAppSelector((state) => state.offers.isDataLoaded);
-
-  const currentCity = useAppSelector((state) => state.offers.city);
+  const offers = useAppSelector((state) => state.OFFERS.offersList);
+  const isDataLoaded = useAppSelector((state) => state.OFFERS.isDataLoaded);
 
   if (!isDataLoaded) {
     return (
@@ -28,7 +26,7 @@ function App(): JSX.Element {
       <Routes>
         <Route
           path={AppRoute.Root}
-          element={<MainScreen offers={offers} currentCity={currentCity} />}
+          element={<MainScreen offers={offers} />}
         />
         <Route
           path={AppRoute.Login}
