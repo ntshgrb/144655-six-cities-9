@@ -1,8 +1,11 @@
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
 import {getUserEmail} from '../../sevrices/user-email';
+import {logoutAction} from '../../store/api-actions';
+import {useAppDispatch} from '../../hooks/index';
 
 function HeaderNavigationAuth ():JSX.Element {
+  const dispatch = useAppDispatch();
   const email = getUserEmail();
 
   return (
@@ -15,9 +18,16 @@ function HeaderNavigationAuth ():JSX.Element {
         </Link>
       </li>
       <li className="header__nav-item">
-        <a className="header__nav-link" href="#">
+        <Link
+          className="header__nav-link"
+          onClick={(event) => {
+            event.preventDefault();
+            dispatch(logoutAction());
+          }}
+          to='/'
+        >
           <span className="header__signout">Sign out</span>
-        </a>
+        </Link>
       </li>
     </ul>
   );

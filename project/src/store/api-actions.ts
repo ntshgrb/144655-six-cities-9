@@ -9,10 +9,10 @@ import {loadReviews, sendReviews} from './reducers/reviews';
 import {setError, requireAuthorization} from './reducers/utility';
 import {errorHandle} from '../sevrices/error-handle';
 import {AuthData} from '../types/auth-data';
-import {saveToken} from '../sevrices/token';
+import {dropToken, saveToken} from '../sevrices/token';
 import {Review} from '../types/review';
 import {NewReview} from '../types/new-review';
-import {saveUserEmail} from '../sevrices/user-email';
+import {deleteEmail, saveUserEmail} from '../sevrices/user-email';
 
 export const fetchOffersAction = createAsyncThunk(
   'data/loadOffers',
@@ -99,6 +99,20 @@ export const loginAction = createAsyncThunk(
     } catch (error) {
       errorHandle(error);
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    }
+  },
+);
+
+export const logoutAction = createAsyncThunk(
+  'user/logout',
+  async () => {
+    try {
+      await api.delete(APIRoute.Logout);
+      dropToken();
+      deleteEmail();
+      store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    } catch (error) {
+      errorHandle(error);
     }
   },
 );
