@@ -9,6 +9,7 @@ type InitialState = {
   isDataLoaded: boolean,
   currentOffer: Offer | null,
   nearbyOffers: Offer[],
+  favoriteOffers: Offer[],
 }
 
 const initialState: InitialState = {
@@ -17,6 +18,7 @@ const initialState: InitialState = {
   isDataLoaded: false,
   currentOffer: null,
   nearbyOffers: [],
+  favoriteOffers: [],
 };
 
 export const offers = createSlice({
@@ -36,7 +38,10 @@ export const offers = createSlice({
     loadNearbyOffers: (state, action) => {
       state.nearbyOffers = action.payload;
     },
+    loadFavoriteOffers: (state, action) => {
+      state.favoriteOffers = action.payload;
+    },
   },
 });
 
-export const {changeCityAction, loadOffers, loadOffer, loadNearbyOffers} = offers.actions;
+export const {changeCityAction, loadOffers, loadOffer, loadNearbyOffers, loadFavoriteOffers} = offers.actions;
