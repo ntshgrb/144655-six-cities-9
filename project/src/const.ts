@@ -43,6 +43,7 @@ export enum APIRoute {
   Login = '/login',
   Logout = '/logout',
   Comments = '/comments',
+  Favorites = '/favorite',
 }
 
 export enum HTTP_CODE {
@@ -78,3 +79,9 @@ export const REVIEW_RATE = [
     rating: 'terribly',
   },
 ];
+
+export enum NameSpaces {
+  offers = 'OFFERS',
+  reviews = 'REVIEWS',
+  utility = 'UTILITY'
+}

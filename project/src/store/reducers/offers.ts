@@ -1,15 +1,15 @@
 import {Offer} from '../../types/offer';
-import {Review} from '../../types/review';
 import {DEFAULT_CITY} from '../../const';
 import {createSlice} from '@reduxjs/toolkit';
+import {NameSpaces} from '../../const';
 
 type InitialState = {
   city: string,
   offersList: Offer[],
   isDataLoaded: boolean,
   currentOffer: Offer | null,
-  currenOfferReviews: Review[],
   nearbyOffers: Offer[],
+  favoriteOffers: Offer[],
 }
 
 const initialState: InitialState = {
@@ -17,12 +17,12 @@ const initialState: InitialState = {
   offersList: [],
   isDataLoaded: false,
   currentOffer: null,
-  currenOfferReviews: [],
   nearbyOffers: [],
+  favoriteOffers: [],
 };
 
 export const offers = createSlice({
-  name: 'offers',
+  name: NameSpaces.offers,
   initialState,
   reducers: {
     changeCityAction: (state, action) => {
@@ -35,16 +35,13 @@ export const offers = createSlice({
     loadOffer: (state, action) => {
       state.currentOffer = action.payload;
     },
-    loadReviews: (state, action) => {
-      state.currenOfferReviews = action.payload;
-    },
-    sendReviews: (state, action) => {
-      state.currenOfferReviews = action.payload;
-    },
     loadNearbyOffers: (state, action) => {
       state.nearbyOffers = action.payload;
+    },
+    loadFavoriteOffers: (state, action) => {
+      state.favoriteOffers = action.payload;
     },
   },
 });
 
-export const {changeCityAction, loadOffers, loadOffer, loadReviews, sendReviews, loadNearbyOffers} = offers.actions;
+export const {changeCityAction, loadOffers, loadOffer, loadNearbyOffers, loadFavoriteOffers} = offers.actions;

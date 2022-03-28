@@ -5,7 +5,7 @@ import {useAppSelector} from '../../hooks/';
 import {AuthorizationStatus} from '../../const';
 
 function Header(): JSX.Element {
-  const authorizationStatus = useAppSelector((state) => state.utility.authorizationStatus);
+  const authorizationStatus = useAppSelector((state) => state.UTILITY.authorizationStatus);
 
   return (
     <header className="header">

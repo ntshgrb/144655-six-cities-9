@@ -8,3 +8,7 @@ export const getUserEmail = (): string => {
 export const saveUserEmail = (email: string): void => {
   localStorage.setItem(USER_EMAIL, email);
 };
+
+export const deleteEmail = () => {
+  localStorage.removeItem(USER_EMAIL);
+};
