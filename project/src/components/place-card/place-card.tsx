@@ -2,6 +2,8 @@ import {Link} from 'react-router-dom';
 import {Offer} from '../../types/offer';
 import {AppRoute} from '../../const';
 import {getPlaceRatingStars, getPlaceType, getButtonFavoriteClassName} from '../../utils/card';
+import {toggleFavoriteAction} from '../../store/api-actions';
+import {store} from '../../store';
 
 type PlaceCardProps ={
   offer: Offer;
@@ -22,6 +24,11 @@ function PlaceCard({offer, onActiveCardChange, placeCardClasses}: PlaceCardProps
 
   const buttonFavoriteClassName = getButtonFavoriteClassName(isFavorite);
 
+  const handleButtonClick = () => {
+    const status = +(!isFavorite);
+    store.dispatch(toggleFavoriteAction({id, status}));
+  };
+
   return (
     <article
       className={`${placeCardClasses.CardClass} place-card`}
@@ -41,7 +48,11 @@ function PlaceCard({offer, onActiveCardChange, placeCardClasses}: PlaceCardProps
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={buttonFavoriteClassName} type="button">
+          <button
+            onClick={handleButtonClick}
+            className={buttonFavoriteClassName}
+            type="button"
+          >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>

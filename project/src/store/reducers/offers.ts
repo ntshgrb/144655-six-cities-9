@@ -41,7 +41,15 @@ export const offers = createSlice({
     loadFavoriteOffers: (state, action) => {
       state.favoriteOffers = action.payload;
     },
+    updateOfferFavoriteStatus: (state, action) => {
+      const index = state.offersList.findIndex((offer) => offer.id === action.payload.id);
+      // eslint-disable-next-line no-console
+      console.log(index);
+      if (index !== -1) {
+        state.offersList[index].isFavorite = !state.offersList[index].isFavorite;
+      }
+    },
   },
 });
 
-export const {changeCityAction, loadOffers, loadOffer, loadNearbyOffers, loadFavoriteOffers} = offers.actions;
+export const {changeCityAction, loadOffers, loadOffer, loadNearbyOffers, loadFavoriteOffers, updateOfferFavoriteStatus} = offers.actions;
