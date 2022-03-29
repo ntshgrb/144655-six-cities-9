@@ -1,4 +1,4 @@
-import {useState} from 'react';
+// import {useState} from 'react';
 import PlaceCard from '../../components/place-card/place-card';
 import {Offer} from '../../types/offer';
 
@@ -14,11 +14,11 @@ type PlacesListProps = {
 }
 
 function PlacesList ({offers, handleOfferHover, cardClasses}: PlacesListProps): JSX.Element {
-  const [activeCard, setActiveCard] = useState(0);
+  // const [activeCard, setActiveCard] = useState(0);
 
   const handleCardMouseOver = (id: number) => {
-    handleOfferHover?.(activeCard);
-    setActiveCard(id);
+    handleOfferHover?.(id);
+    // setActiveCard(id);
   };
 
   return (

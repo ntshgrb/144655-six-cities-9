@@ -9,8 +9,6 @@ import {AppRoute, AuthorizationStatus} from '../../const';
 function FavoritesScreen(): JSX.Element {
   const authStatus = useAppSelector((state) => state.UTILITY.authorizationStatus);
   const favoriteOffers = useAppSelector((state) => state.OFFERS.favoriteOffers);
-  // eslint-disable-next-line no-console
-  console.log(favoriteOffers);
 
   if (authStatus !== AuthorizationStatus.Auth) {
     return <Navigate to={AppRoute.Login} />;
