@@ -1,3 +1,5 @@
+import {store} from '../../store';
+import {toggleFavoriteAction } from '../../store/api-actions';
 import {Offer} from '../../types/offer';
 import {getPlaceRatingStars, getPlaceType, getButtonFavoriteClassName} from '../../utils/card';
 
@@ -6,13 +8,18 @@ type FavoritePlaceCardProps = {
 }
 
 function FavoritePlaceCard({offer}: FavoritePlaceCardProps): JSX.Element {
-  const {previewImage, isPremium, price, rating, title, type, isFavorite} = offer;
+  const {previewImage, isPremium, price, rating, title, type, isFavorite, id} = offer;
 
   const placeRatingStars = getPlaceRatingStars(rating);
 
   const placeType = getPlaceType(type);
 
   const buttonFavoriteClassName = getButtonFavoriteClassName(isFavorite);
+
+  const handleButtonClick = () => {
+    const status = +(!isFavorite);
+    store.dispatch(toggleFavoriteAction({id, status}));
+  };
 
   return (
     <article className="favorites__card place-card">
@@ -30,7 +37,11 @@ function FavoritePlaceCard({offer}: FavoritePlaceCardProps): JSX.Element {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={buttonFavoriteClassName} type="button">
+          <button
+            onClick={handleButtonClick}
+            className={buttonFavoriteClassName}
+            type="button"
+          >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>

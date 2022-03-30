@@ -1,22 +1,35 @@
 import {Navigate} from 'react-router-dom';
-import FavoritePlaceCard from '../../components/favorite-place-card/favorite-place-card';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import {useAppSelector} from '../../hooks/index';
 import {AppRoute, AuthorizationStatus} from '../../const';
-
+import {store} from '../../store';
+import {fetchFavoriteOffers} from '../../store/api-actions';
+import {useEffect} from 'react';
+import FavoriteList from '../../components/favorite-list';
+import LoadingScreen from '../../components/loading-screen/loading-screen';
 
 function FavoritesScreen(): JSX.Element {
+  useEffect(() => {
+    store.dispatch(fetchFavoriteOffers());
+  }, []);
+
+
   const authStatus = useAppSelector((state) => state.UTILITY.authorizationStatus);
   const favoriteOffers = useAppSelector((state) => state.OFFERS.favoriteOffers);
+  const isDataLoaded = useAppSelector((state) => state.OFFERS.areFavoriteOffersLoaded);
 
   if (authStatus !== AuthorizationStatus.Auth) {
     return <Navigate to={AppRoute.Login} />;
   }
 
-  const isEmpty = favoriteOffers.length === 0;
+  if (!isDataLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
-  const favoriteCities = Array.from(new Set(favoriteOffers.map(({city}) => city.name)));
+  const isEmpty = favoriteOffers.length === 0;
 
   return (
     <div
@@ -38,26 +51,7 @@ function FavoritesScreen(): JSX.Element {
               </section> :
               <section className="favorites">
                 <h1 className="favorites__title">Saved listing</h1>
-                <ul className="favorites__list">
-                  {
-                    favoriteCities.map( (city: string) => (
-                      <li key={city} className="favorites__locations-items">
-                        <div className="favorites__locations locations locations--current">
-                          <div className="locations__item">
-                            <a className="locations__item-link" href="#">
-                              <span>{city}</span>
-                            </a>
-                          </div>
-                        </div>
-                        <div className="favorites__places">
-                          {
-                            favoriteOffers.filter((offer) => offer.city.name === city)
-                              .map((offer) => <FavoritePlaceCard key={offer.id} offer={offer} />)
-                          }
-                        </div>
-                      </li>))
-                  }
-                </ul>
+                <FavoriteList favoriteOffers={favoriteOffers} />
               </section>
           }
         </div>

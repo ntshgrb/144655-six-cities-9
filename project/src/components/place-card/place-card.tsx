@@ -5,7 +5,7 @@ import {getPlaceRatingStars, getPlaceType, getButtonFavoriteClassName} from '../
 import {toggleFavoriteAction} from '../../store/api-actions';
 import {store} from '../../store';
 
-type PlaceCardProps ={
+type PlaceCardProps = {
   offer: Offer;
   onActiveCardChange?: (id: number) => void,
   placeCardClasses: {
@@ -38,7 +38,7 @@ function PlaceCard({offer, onActiveCardChange, placeCardClasses}: PlaceCardProps
         isPremium ? <div className="place-card__mark"><span>Premium</span></div> : null
       }
       <div className={`${placeCardClasses.ImageWrapper} place-card__image-wrapper`}>
-        <a href="#">
+        <a>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image" />
         </a>
       </div>
