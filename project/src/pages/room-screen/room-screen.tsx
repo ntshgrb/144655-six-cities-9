@@ -1,5 +1,5 @@
 import {useDispatch} from 'react-redux';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {useAppSelector} from '../../hooks';
 import ReviewForm from '../../components/review-form/review-form';
 import Header from '../../components/header/header';
@@ -11,8 +11,9 @@ import ReviewsList from '../../components/reviews-list/reviews-list';
 import Map from '../../components/map/map';
 import {PROPERTY_MAP_HEIGHT} from '../../map-settings';
 import {AuthorizationStatus, PropertyCardClasses} from '../../const';
-import {fetchNearbyOffersAction, fetchOfferAction, fetchReviewsAction} from '../../store/api-actions';
+import {fetchNearbyOffersAction, fetchOfferAction, fetchReviewsAction, toggleFavoriteAction} from '../../store/api-actions';
 import RoomFeatures from '../../components/room-features/room-features';
+import {store} from '../../store';
 
 type RoomScreenProps = {
   offers: Offer[];
@@ -29,6 +30,8 @@ function RoomScreen({offers}: RoomScreenProps): JSX.Element | null {
   const nearbyOffers = useAppSelector((state) => state.OFFERS.nearbyOffers);
   const authorizationStatus = useAppSelector((state) => state.UTILITY.authorizationStatus);
 
+  const [isFavorite, toggleFavoriteStatus] = useState(currentRoom?.isFavorite);
+
   useEffect(() => {
     if (params.id) {
       dispatch(fetchOfferAction(+params.id));
@@ -41,7 +44,7 @@ function RoomScreen({offers}: RoomScreenProps): JSX.Element | null {
     return null;
   }
 
-  const {images, isPremium, title, isFavorite, rating, type, bedrooms, maxAdults, price, goods, description, host, id} = currentRoom;
+  const {images, isPremium, title, rating, type, bedrooms, maxAdults, price, goods, description, host, id} = currentRoom;
 
   let imagesToRender = images;
 
@@ -55,6 +58,12 @@ function RoomScreen({offers}: RoomScreenProps): JSX.Element | null {
   const {avatarUrl, isPro, name} = host;
 
   const reviewsCount = currentRoomReviews.length;
+
+  const handleButtonClick = () => {
+    const status = +(!isFavorite);
+    store.dispatch(toggleFavoriteAction({id, status}));
+    toggleFavoriteStatus(!isFavorite);
+  };
 
   return (
     <div className='page'>
@@ -85,7 +94,11 @@ function RoomScreen({offers}: RoomScreenProps): JSX.Element | null {
                 <h1 className="property__name">
                   {title}
                 </h1>
-                <button className={`property__bookmark-button button ${isFavorite ? 'property__bookmark-button--active': ''}`}  type="button">
+                <button
+                  onClick={handleButtonClick}
+                  className={`property__bookmark-button button ${isFavorite ? 'property__bookmark-button--active': ''}`}
+                  type="button"
+                >
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>

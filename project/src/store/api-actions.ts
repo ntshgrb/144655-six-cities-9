@@ -4,7 +4,7 @@ import {api} from '../store';
 import {store} from '../store';
 import {Offer} from '../types/offer';
 import {redirectToRoute} from './action';
-import {loadOffers, loadOffer, loadNearbyOffers, loadFavoriteOffers} from './reducers/offers';
+import {loadOffers, loadOffer, loadNearbyOffers, loadFavoriteOffers, updateOfferFavoriteStatus} from './reducers/offers';
 import {loadReviews, sendReviews} from './reducers/reviews';
 import {setError, requireAuthorization} from './reducers/utility';
 import {errorHandle} from '../sevrices/error-handle';
@@ -12,6 +12,7 @@ import {AuthData} from '../types/auth-data';
 import {dropToken, saveToken} from '../sevrices/token';
 import {Review} from '../types/review';
 import {NewReview} from '../types/new-review';
+import {FavoriteData} from '../types/favorite-data';
 import {deleteEmail, saveUserEmail} from '../sevrices/user-email';
 
 export const fetchOffersAction = createAsyncThunk(
@@ -32,6 +33,18 @@ export const fetchOfferAction = createAsyncThunk(
     try {
       const {data} = await api.get<Offer>(`${APIRoute.Offers}/${offerId}`);
       store.dispatch(loadOffer(data));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const toggleFavoriteAction = createAsyncThunk(
+  'data/toggleFavorite',
+  async ({id, status}: FavoriteData) => {
+    try {
+      const {data} = await api.post<Offer>(`${APIRoute.Favorites}/${id}/${status}`);
+      store.dispatch(updateOfferFavoriteStatus(data));
     } catch (error) {
       errorHandle(error);
     }
