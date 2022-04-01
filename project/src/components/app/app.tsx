@@ -42,7 +42,7 @@ function App(): JSX.Element {
         />
         <Route
           path={AppRoute.Room}
-          element={<RoomScreen offers={offers} />}
+          element={<RoomScreen />}
         />
         <Route
           path='*'

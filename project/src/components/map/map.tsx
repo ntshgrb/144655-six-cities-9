@@ -4,6 +4,7 @@ import useMap from '../../hooks/useMap';
 import leaflet from 'leaflet';
 import {City} from '../../types/city';
 import {iconSize, DEFAULT_PIN, ACTIVE_PIN} from '../../map-settings';
+import L from 'leaflet';
 
 type MapProps = {
   currentCityInfo: City,
@@ -17,7 +18,6 @@ function Map({currentCityInfo, offers, selectedOffer, className, mapHeight}: Map
   const mapRef = useRef(null);
   const map = useMap(mapRef, currentCityInfo);
 
-
   const defaultCustomIcon = leaflet.icon({
     iconUrl: DEFAULT_PIN,
     iconSize: [iconSize.Width, iconSize.Height],
@@ -30,7 +30,11 @@ function Map({currentCityInfo, offers, selectedOffer, className, mapHeight}: Map
     iconAnchor: [iconSize.Width/2, iconSize.Height],
   });
 
+  const layerGroup = L.layerGroup();
+
   useEffect(() => {
+    layerGroup.clearLayers();
+
     if (map) {
       offers.forEach(({location, id}) => {
         leaflet
@@ -42,10 +46,12 @@ function Map({currentCityInfo, offers, selectedOffer, className, mapHeight}: Map
               ? currentCustomIcon
               : defaultCustomIcon,
           })
-          .addTo(map);
+          .addTo(layerGroup);
       });
+      layerGroup.addTo(map);
+
     }
-  }, [currentCityInfo, map, offers, selectedOffer, currentCustomIcon, defaultCustomIcon]);
+  }, [currentCityInfo, map, offers, selectedOffer, currentCustomIcon, defaultCustomIcon, layerGroup]);
 
   return (
     <section

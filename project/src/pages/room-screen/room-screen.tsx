@@ -1,10 +1,8 @@
 import {useDispatch} from 'react-redux';
-import {useEffect, useState} from 'react';
 import {useAppSelector} from '../../hooks';
 import ReviewForm from '../../components/review-form/review-form';
 import Header from '../../components/header/header';
 import PlacesList from '../../components/places-list/places-list';
-import {Offer} from '../../types/offer';
 import {getPlaceRatingStars, getPlaceType} from '../../utils/card';
 import {useParams} from 'react-router-dom';
 import ReviewsList from '../../components/reviews-list/reviews-list';
@@ -14,12 +12,9 @@ import {AuthorizationStatus, PropertyCardClasses} from '../../const';
 import {fetchNearbyOffersAction, fetchOfferAction, fetchReviewsAction, toggleFavoriteAction} from '../../store/api-actions';
 import RoomFeatures from '../../components/room-features/room-features';
 import {store} from '../../store';
+import {useLayoutEffect} from 'react';
 
-type RoomScreenProps = {
-  offers: Offer[];
-}
-
-function RoomScreen({offers}: RoomScreenProps): JSX.Element | null {
+function RoomScreen(): JSX.Element | null {
   const MAX_IMAGES_COUNT = 6;
 
   const dispatch = useDispatch();
@@ -30,9 +25,7 @@ function RoomScreen({offers}: RoomScreenProps): JSX.Element | null {
   const nearbyOffers = useAppSelector((state) => state.OFFERS.nearbyOffers);
   const authorizationStatus = useAppSelector((state) => state.UTILITY.authorizationStatus);
 
-  const [isFavorite, toggleFavoriteStatus] = useState(currentRoom?.isFavorite);
-
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (params.id) {
       dispatch(fetchOfferAction(+params.id));
       dispatch(fetchReviewsAction(+params.id));
@@ -44,7 +37,7 @@ function RoomScreen({offers}: RoomScreenProps): JSX.Element | null {
     return null;
   }
 
-  const {images, isPremium, title, rating, type, bedrooms, maxAdults, price, goods, description, host, id} = currentRoom;
+  const {images, isPremium, title, rating, type, bedrooms, maxAdults, price, goods, description, host, id, isFavorite} = currentRoom;
 
   let imagesToRender = images;
 
@@ -62,7 +55,6 @@ function RoomScreen({offers}: RoomScreenProps): JSX.Element | null {
   const handleButtonClick = () => {
     const status = +(!isFavorite);
     store.dispatch(toggleFavoriteAction({id, status}));
-    toggleFavoriteStatus(!isFavorite);
   };
 
   return (
