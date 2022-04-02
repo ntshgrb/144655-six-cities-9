@@ -1,5 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { NameSpaces } from '../../const';
+import {createSlice} from '@reduxjs/toolkit';
+import {NameSpaces} from '../../const';
 import {Offer} from '../../types/offer';
 
 type InitialState = {
