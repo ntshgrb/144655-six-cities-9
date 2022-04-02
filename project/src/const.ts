@@ -86,3 +86,5 @@ export enum NameSpaces {
   utility = 'UTILITY',
   nearbyOffers = 'NEARBY_OFFERS',
 }
+
+export const MAX_REVIEWS_COUNT = 10;
