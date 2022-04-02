@@ -8,11 +8,11 @@ import {useParams} from 'react-router-dom';
 import ReviewsList from '../../components/reviews-list/reviews-list';
 import Map from '../../components/map/map';
 import {PROPERTY_MAP_HEIGHT} from '../../map-settings';
-import {AuthorizationStatus, PropertyCardClasses} from '../../const';
+import {AppRoute, AuthorizationStatus, PropertyCardClasses} from '../../const';
 import {fetchNearbyOffersAction, fetchOfferAction, fetchReviewsAction, toggleFavoriteAction} from '../../store/api-actions';
 import RoomFeatures from '../../components/room-features/room-features';
-import {store} from '../../store';
 import {useLayoutEffect} from 'react';
+import { redirectToRoute } from '../../store/action';
 
 function RoomScreen(): JSX.Element | null {
   const MAX_IMAGES_COUNT = 6;
@@ -49,12 +49,14 @@ function RoomScreen(): JSX.Element | null {
   const placeType = getPlaceType(type);
 
   const {avatarUrl, isPro, name} = host;
-
   const reviewsCount = currentRoomReviews.length;
 
   const handleButtonClick = () => {
+    if (authorizationStatus !== AuthorizationStatus.Auth) {
+      dispatch(redirectToRoute(AppRoute.Login));
+    }
     const status = +(!isFavorite);
-    store.dispatch(toggleFavoriteAction({id, status}));
+    dispatch(toggleFavoriteAction({id, status}));
   };
 
   return (

@@ -1,9 +1,10 @@
 import {Link} from 'react-router-dom';
 import {Offer} from '../../types/offer';
-import {AppRoute} from '../../const';
+import {AppRoute, AuthorizationStatus} from '../../const';
 import {getPlaceRatingStars, getPlaceType, getButtonFavoriteClassName} from '../../utils/card';
 import {toggleFavoriteAction} from '../../store/api-actions';
-import {store} from '../../store';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {redirectToRoute} from '../../store/action';
 
 type PlaceCardProps = {
   offer: Offer;
@@ -16,7 +17,11 @@ type PlaceCardProps = {
 }
 
 function PlaceCard({offer, onActiveCardChange, placeCardClasses}: PlaceCardProps): JSX.Element {
+  const dispatch = useAppDispatch();
+
   const {isPremium, previewImage, price, rating, isFavorite, title, type, id} = offer;
+
+  const authStatus = useAppSelector((state) => state.UTILITY.authorizationStatus);
 
   const placeRatingStars = getPlaceRatingStars(rating);
 
@@ -25,14 +30,18 @@ function PlaceCard({offer, onActiveCardChange, placeCardClasses}: PlaceCardProps
   const buttonFavoriteClassName = getButtonFavoriteClassName(isFavorite);
 
   const handleButtonClick = () => {
+    if (authStatus !== AuthorizationStatus.Auth) {
+      dispatch(redirectToRoute(AppRoute.Login));
+    }
+
     const status = +(!isFavorite);
-    store.dispatch(toggleFavoriteAction({id, status}));
+    dispatch(toggleFavoriteAction({id, status}));
   };
 
   return (
     <article
       className={`${placeCardClasses.CardClass} place-card`}
-      onMouseOver={ ( {target}: React.MouseEvent<HTMLElement, MouseEvent>) => {onActiveCardChange?.(id);} }
+      onMouseOver={() => {onActiveCardChange?.(id);}}
     >
       {
         isPremium ? <div className="place-card__mark"><span>Premium</span></div> : null
