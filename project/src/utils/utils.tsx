@@ -28,3 +28,8 @@ const isEmpty = (value: string): boolean =>  value.trim() === '';
 const sortReviews = (reviewsList: Review[]) => reviewsList.sort((a, b) => Date.parse(b.date) - Date.parse(a.date));
 
 export {getCurrentOffers, isOffersListEmpty, sortOffers, isEmpty, sortReviews};
+
+export const getRandomItem = (itemList: string[]) => {
+  const randomIndex = Math.floor(Math.random() * itemList.length);
+  return itemList[randomIndex];
+};
