@@ -1,4 +1,4 @@
-import {useEffect, useRef, CSSProperties} from 'react';
+import {useEffect, useRef, CSSProperties, memo} from 'react';
 import {Offer} from '../../types/offer';
 import useMap from '../../hooks/useMap';
 import leaflet from 'leaflet';
@@ -63,4 +63,4 @@ function Map({currentCityInfo, offers, selectedOffer, className, mapHeight}: Map
   );
 }
 
-export default Map;
+export default memo(Map);

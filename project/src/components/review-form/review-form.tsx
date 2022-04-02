@@ -1,4 +1,4 @@
-import {useState, ChangeEvent, FormEvent} from 'react';
+import {useState, ChangeEvent, FormEvent, memo} from 'react';
 import {useDispatch} from 'react-redux';
 import {postReviewAction} from '../../store/api-actions';
 import {NewReview} from '../../types/new-review';
@@ -91,4 +91,4 @@ function ReviewForm({id}: ReviewFormProps): JSX.Element {
   );
 }
 
-export default ReviewForm;
+export default memo(ReviewForm);

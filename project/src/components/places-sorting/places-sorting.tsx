@@ -1,5 +1,5 @@
 import {SortingTypes} from '../../const';
-import {useState} from 'react';
+import {memo, useState} from 'react';
 
 type PlacesSortingProps = {
   handleSortingChange: (sortType: string) => void,
@@ -50,4 +50,4 @@ function PlacesSorting ({handleSortingChange, placesSorting}: PlacesSortingProps
   );
 }
 
-export default PlacesSorting;
+export default memo(PlacesSorting);
