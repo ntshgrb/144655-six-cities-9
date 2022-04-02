@@ -1,5 +1,6 @@
 import {datatype, address, lorem, name, image} from 'faker';
 import {Offer} from '../types/offer';
+import {Review} from '../types/review';
 
 export const makeFakeOffer = (): Offer => ({
   bedrooms: datatype.number(),
@@ -35,3 +36,16 @@ export const makeFakeOffer = (): Offer => ({
   title: datatype.string(5),
   type: datatype.string(1),
 } as Offer);
+
+export const makeFakeReview = (): Review => ({
+  comment: lorem.word(10),
+  date: datatype.string(),
+  id: datatype.number(),
+  rating: datatype.number(),
+  user: {
+    avatarUrl: image.imageUrl(),
+    id: datatype.number(),
+    isPro: datatype.boolean(),
+    name: name.title(),
+  },
+} as Review);
