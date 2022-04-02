@@ -22,7 +22,7 @@ function RoomScreen(): JSX.Element | null {
 
   const currentRoom = useAppSelector((state) => state.OFFERS.currentOffer);
   const currentRoomReviews = useAppSelector((state) => state.REVIEWS.currenOfferReviews);
-  const nearbyOffers = useAppSelector((state) => state.OFFERS.nearbyOffers);
+  const nearbyOffers = useAppSelector((state) => state.NEARBY_OFFERS.nearbyOffers);
   const authorizationStatus = useAppSelector((state) => state.UTILITY.authorizationStatus);
 
   useLayoutEffect(() => {

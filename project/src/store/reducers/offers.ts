@@ -8,7 +8,6 @@ type InitialState = {
   offersList: Offer[],
   isDataLoaded: boolean,
   currentOffer: Offer | null,
-  nearbyOffers: Offer[],
   favoriteOffers: Offer[],
 }
 
@@ -17,7 +16,6 @@ const initialState: InitialState = {
   offersList: [],
   isDataLoaded: false,
   currentOffer: null,
-  nearbyOffers: [],
   favoriteOffers: [],
 };
 
@@ -40,9 +38,6 @@ export const offers = createSlice({
         state.currentOffer = action.payload;
       }
     },
-    loadNearbyOffers: (state, action) => {
-      state.nearbyOffers = action.payload;
-    },
     loadFavoriteOffers: (state, action) => {
       state.favoriteOffers = action.payload;
     },
@@ -55,13 +50,7 @@ export const offers = createSlice({
         [...state.favoriteOffers, action.payload] :
         state.favoriteOffers.filter((offer) => offer.id !== action.payload.id);
     },
-    updateNearbyOffers: (state, action) => {
-      const index = state.nearbyOffers.findIndex((offer) => offer.id === action.payload.id);
-      if (index !== -1) {
-        state.nearbyOffers = [...state.nearbyOffers.slice(0, index), action.payload, ...state.nearbyOffers.slice(index + 1)];
-      }
-    },
   },
 });
 
-export const {changeCityAction, loadOffers, loadOffer, loadNearbyOffers, loadFavoriteOffers, updateOfferFavoriteStatus, updateCurrentOffer, updateNearbyOffers} = offers.actions;
+export const {changeCityAction, loadOffers, loadOffer, loadFavoriteOffers, updateOfferFavoriteStatus, updateCurrentOffer} = offers.actions;
