@@ -29,6 +29,8 @@ const sortReviews = (reviewsList: Review[]) => reviewsList.sort((a, b) => Date.p
 
 export {getCurrentOffers, isOffersListEmpty, sortOffers, isEmpty, sortReviews};
 
+export const getRandomOfferIndex = (list: Offer[]) =>  Math.floor(Math.random() * list.length);
+
 export const getRandomItem = (itemList: string[]) => {
   const randomIndex = Math.floor(Math.random() * itemList.length);
   return itemList[randomIndex];
