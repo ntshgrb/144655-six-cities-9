@@ -1,13 +1,7 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {APIRoute, TIMEOUT_SHOW_ERROR, AuthorizationStatus, AppRoute} from '../const';
-
 import {AxiosInstance} from 'axios';
-
-// import {api} from '../store';
-// import {store} from '../store';
-
 import {AppDispatch, State} from '../types/state';
-
 import {Offer} from '../types/offer';
 import {redirectToRoute} from './action';
 import {loadOffers, loadOffer, loadFavoriteOffers, updateOfferFavoriteStatus, updateCurrentOffer} from './reducers/offers';

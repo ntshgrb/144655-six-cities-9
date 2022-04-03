@@ -1,6 +1,7 @@
 import {datatype, address, lorem, name, image} from 'faker';
 import {Offer} from '../types/offer';
 import {Review} from '../types/review';
+import {NewReview} from '../types/new-review';
 
 export const makeFakeOffer = (): Offer => ({
   bedrooms: datatype.number(),
@@ -49,3 +50,20 @@ export const makeFakeReview = (): Review => ({
     name: name.title(),
   },
 } as Review);
+
+export const makeFakeComment = ():NewReview  => ({
+  comment: lorem.word(10),
+  rating: datatype.number(),
+  offerId: datatype.number(),
+} as NewReview);
+
+export const makeFakeOffersList = (length: number) => new Array(length).fill(null).map(() => makeFakeOffer());
+
+export const makeReviewsList = (length: number) => new Array(length).fill(null).map(() => makeFakeReview());
+
+export enum listsLength {
+  OffersLength = 20,
+  FavoritesLength = 5,
+  ReviewsLength = 4,
+  OffersNearby = 3,
+}

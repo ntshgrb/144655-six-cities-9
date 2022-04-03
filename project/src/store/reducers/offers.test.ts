@@ -2,11 +2,11 @@ import {DEFAULT_CITY} from '../../const';
 import {offers} from './offers';
 import {changeCityAction, loadOffers, loadOffer, updateCurrentOffer, loadFavoriteOffers, updateOfferFavoriteStatus} from './offers';
 import {address} from 'faker';
-import {makeFakeOffer} from '../../utils/mocks';
+import {listsLength, makeFakeOffer, makeFakeOffersList} from '../../utils/mocks';
 import {getRandomOfferIndex} from '../../utils/utils';
 
-const fakeOffers = new Array(20).fill(null).map(() => makeFakeOffer());
-const fakeFavoriteOffers = new Array(5).fill(null).map(() => makeFakeOffer()).map((offer) => ({...offer, isFavorite: true}));
+const fakeOffers = makeFakeOffersList(listsLength.OffersLength);
+const fakeFavoriteOffers = makeFakeOffersList(listsLength.FavoritesLength).map((offer) => ({...offer, isFavorite: true}));
 const fakeOffer = makeFakeOffer();
 
 describe('Reducer: offers', () => {
