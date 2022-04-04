@@ -2,6 +2,7 @@ import ReviewsItem from '../reviews-item/reviews-item';
 import {Review} from '../../types/review';
 import {MAX_REVIEWS_COUNT} from '../../const';
 import {sortReviews} from '../../utils/utils';
+import {memo} from 'react';
 
 type ReviewsListProps = {
   reviews: Review[];
@@ -29,4 +30,4 @@ function ReviewsList({reviews}: ReviewsListProps): JSX.Element {
   );
 }
 
-export default ReviewsList;
+export default memo(ReviewsList);

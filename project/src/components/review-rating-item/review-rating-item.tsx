@@ -1,4 +1,5 @@
 import {ChangeEvent} from 'react';
+import {useAppSelector} from '../../hooks';
 
 type ReviewRatingItemProps = {
   rateChangeHandle: (event: ChangeEvent<HTMLInputElement>) => void,
@@ -10,6 +11,8 @@ type ReviewRatingItemProps = {
 }
 
 function ReviewRatingItem({rateChangeHandle, rating, currentRate}: ReviewRatingItemProps): JSX.Element {
+  const loadingStatus = useAppSelector((state) => state.REVIEWS.reviewIsSending);
+
   const isChecked = +currentRate === rating.value;
   return (
     <>
@@ -21,6 +24,7 @@ function ReviewRatingItem({rateChangeHandle, rating, currentRate}: ReviewRatingI
         id={`${rating.value}-stars`}
         type="radio"
         checked={isChecked}
+        disabled={loadingStatus}
       />
       <label
         htmlFor={`${rating.value}-stars`}

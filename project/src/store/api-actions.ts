@@ -6,7 +6,7 @@ import {Offer} from '../types/offer';
 import {redirectToRoute} from './action';
 import {loadOffers, loadOffer, loadFavoriteOffers, updateOfferFavoriteStatus, updateCurrentOffer} from './reducers/offers';
 import {loadNearbyOffers, updateNearbyOffers} from './reducers/nearby-offers';
-import {loadReviews, sendReviews} from './reducers/reviews';
+import {loadReviews, sendReviews, setLoadingStatus} from './reducers/reviews';
 import {setError, requireAuthorization} from './reducers/utility';
 import {errorHandle} from '../sevrices/error-handle';
 import {AuthData} from '../types/auth-data';
@@ -175,11 +175,15 @@ export const postReviewAction = createAsyncThunk<void, NewReview, {
   extra: AxiosInstance
 }>(
   'data/postReview',
-  async ({comment, rating, offerId},  {dispatch, extra: api}) => {
+  async ({comment, rating, offerId, onSucsess},  {dispatch, extra: api}) => {
+    dispatch(setLoadingStatus(true));
     try {
       const {data} = await api.post(`${APIRoute.Comments}/${offerId}`, {comment, rating});
       dispatch(sendReviews(data));
+      dispatch(setLoadingStatus(false));
+      onSucsess();
     } catch (error) {
+      dispatch(setLoadingStatus(false));
       errorHandle(error);
     }
   },

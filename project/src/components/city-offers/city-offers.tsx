@@ -1,4 +1,4 @@
-import {useCallback, useState} from 'react';
+import {memo, useCallback, useState} from 'react';
 import PlacesList from '../places-list/places-list';
 import Map from '../map/map';
 import PlacesSorting from '../places-sorting/places-sorting';
@@ -67,4 +67,4 @@ function CityOffers ({currentOffers, placesCount, currentCity}: CityOffersProps)
   );
 }
 
-export default CityOffers;
+export default memo(CityOffers);
