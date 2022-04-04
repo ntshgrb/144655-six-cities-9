@@ -1,3 +1,5 @@
+import {Link} from 'react-router-dom';
+import {AppRoute} from '../../const';
 import {store} from '../../store';
 import {toggleFavoriteAction } from '../../store/api-actions';
 import {Offer} from '../../types/offer';
@@ -58,7 +60,7 @@ function FavoritePlaceCard({offer}: FavoritePlaceCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{title}</a>
+          <Link to={`${AppRoute.RoomId}${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{placeType}</p>
       </div>

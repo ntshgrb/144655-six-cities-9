@@ -83,5 +83,8 @@ export const REVIEW_RATE = [
 export enum NameSpaces {
   offers = 'OFFERS',
   reviews = 'REVIEWS',
-  utility = 'UTILITY'
+  utility = 'UTILITY',
+  nearbyOffers = 'NEARBY_OFFERS',
 }
+
+export const MAX_REVIEWS_COUNT = 10;

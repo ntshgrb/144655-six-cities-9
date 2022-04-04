@@ -4,10 +4,12 @@ import {NameSpaces} from '../../const';
 
 type InitialState = {
   currenOfferReviews: Review[],
+  reviewIsSending: boolean;
 };
 
 const initialState: InitialState = {
   currenOfferReviews: [],
+  reviewIsSending: false,
 };
 
 export const reviews = createSlice({
@@ -17,10 +19,13 @@ export const reviews = createSlice({
     loadReviews: (state, action) => {
       state.currenOfferReviews = action.payload;
     },
+    setLoadingStatus: (state, action) => {
+      state.reviewIsSending = action.payload;
+    },
     sendReviews: (state, action) => {
       state.currenOfferReviews = action.payload;
     },
   },
 });
 
-export const {loadReviews, sendReviews} = reviews.actions;
+export const {loadReviews, sendReviews, setLoadingStatus} = reviews.actions;

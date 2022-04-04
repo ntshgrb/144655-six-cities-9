@@ -1,9 +1,10 @@
-import {useState, ChangeEvent, FormEvent} from 'react';
+import {useState, ChangeEvent, FormEvent, memo} from 'react';
 import {useDispatch} from 'react-redux';
 import {postReviewAction} from '../../store/api-actions';
 import {NewReview} from '../../types/new-review';
 import {ReviewLength, REVIEW_RATE} from '../../const';
 import ReviewRatingItem from '../review-rating-item/review-rating-item';
+import {useAppSelector} from '../../hooks';
 
 type ReviewFormProps = {
   id: number,
@@ -12,6 +13,7 @@ type ReviewFormProps = {
 function ReviewForm({id}: ReviewFormProps): JSX.Element {
   const [textReview, setReview] = useState('');
   const [rate, setRateReview] = useState('');
+  const loadingStatus = useAppSelector((state) => state.REVIEWS.reviewIsSending);
   const dispatch = useDispatch();
   let buttonIsDisable = true;
 
@@ -33,17 +35,20 @@ function ReviewForm({id}: ReviewFormProps): JSX.Element {
     setRateReview(value);
   };
 
-  if (rate !== '' && ReviewLength.MinReviewLength < textReview.length && textReview.length < ReviewLength.MaxReviewLength) {
+  if (rate !== '' && ReviewLength.MinReviewLength < textReview.length && textReview.length < ReviewLength.MaxReviewLength && !loadingStatus) {
     buttonIsDisable = false;
   }
+
+  const onSucsess = () => {
+    setReview('');
+    setRateReview('');
+  };
 
   const onSubmit = (data: NewReview) => dispatch(postReviewAction(data));
 
   const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    onSubmit({offerId: id, comment: textReview, rating: +rate});
-    setReview('');
-    setRateReview('');
+    onSubmit({offerId: id, comment: textReview, rating: +rate, onSucsess});
   };
 
   return (
@@ -74,6 +79,7 @@ function ReviewForm({id}: ReviewFormProps): JSX.Element {
         value={textReview}
         minLength={ReviewLength.MinReviewLength}
         maxLength={ReviewLength.MaxReviewLength}
+        disabled={loadingStatus}
       >
       </textarea>
       <div className="reviews__button-wrapper">
@@ -91,4 +97,4 @@ function ReviewForm({id}: ReviewFormProps): JSX.Element {
   );
 }
 
-export default ReviewForm;
+export default memo(ReviewForm);

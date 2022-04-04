@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {memo, useCallback, useState} from 'react';
 import PlacesList from '../places-list/places-list';
 import Map from '../map/map';
 import PlacesSorting from '../places-sorting/places-sorting';
@@ -26,9 +26,10 @@ function CityOffers ({currentOffers, placesCount, currentCity}: CityOffersProps)
     setSelectedOffer(activeOffer);
   };
 
-  const handleSortingChange = (sortingType: string) => {
+  const handleSortingChange = useCallback((sortingType: string) => {
     setplacesSorting(sortingType);
-  };
+  }, []);
+
 
   const sortedCurrentOffers = sortOffers([...currentOffers], placesSorting);
 
@@ -55,7 +56,7 @@ function CityOffers ({currentOffers, placesCount, currentCity}: CityOffersProps)
         <Map
           key={currentCity}
           currentCityInfo={currentCityInfo}
-          offers={sortedCurrentOffers}
+          offers={currentOffers}
           selectedOffer={selectedOffer}
           className={'cities__map'}
           mapHeight={MAIN_MAP_HEIGHT}
@@ -66,4 +67,4 @@ function CityOffers ({currentOffers, placesCount, currentCity}: CityOffersProps)
   );
 }
 
-export default CityOffers;
+export default memo(CityOffers);

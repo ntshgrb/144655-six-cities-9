@@ -3,6 +3,7 @@ import HeaderNavigationAuth from './header-navigation-auth';
 import HeaderNavigationNoAuth from './header-navigation-no-auth';
 import {useAppSelector} from '../../hooks/';
 import {AuthorizationStatus} from '../../const';
+import {memo} from 'react';
 
 function Header(): JSX.Element {
   const authorizationStatus = useAppSelector((state) => state.UTILITY.authorizationStatus);
@@ -27,4 +28,4 @@ function Header(): JSX.Element {
   );
 }
 
-export default Header;
+export default memo(Header);

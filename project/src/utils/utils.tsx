@@ -1,5 +1,6 @@
 import {Offer} from '../types/offer';
 import {SortingTypes} from '../const';
+import {Review} from '../types/review';
 
 const getCurrentOffers = (currentCity: string, offersList: Offer[]) => offersList.filter(({city}) => city.name === currentCity);
 
@@ -24,4 +25,13 @@ const sortOffers = (offersList: Offer[], sortType: string) => {
 
 const isEmpty = (value: string): boolean =>  value.trim() === '';
 
-export {getCurrentOffers, isOffersListEmpty, sortOffers, isEmpty};
+const sortReviews = (reviewsList: Review[]) => reviewsList.sort((a, b) => Date.parse(b.date) - Date.parse(a.date));
+
+export {getCurrentOffers, isOffersListEmpty, sortOffers, isEmpty, sortReviews};
+
+export const getRandomOfferIndex = (list: Offer[]) =>  Math.floor(Math.random() * list.length);
+
+export const getRandomItem = (itemList: string[]) => {
+  const randomIndex = Math.floor(Math.random() * itemList.length);
+  return itemList[randomIndex];
+};

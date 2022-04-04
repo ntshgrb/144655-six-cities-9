@@ -3,30 +3,14 @@ import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import {useAppSelector} from '../../hooks/index';
 import {AppRoute, AuthorizationStatus} from '../../const';
-import {store} from '../../store';
-import {fetchFavoriteOffers} from '../../store/api-actions';
-import {useEffect} from 'react';
 import FavoriteList from '../../components/favorite-list';
-import LoadingScreen from '../../components/loading-screen/loading-screen';
 
 function FavoritesScreen(): JSX.Element {
-  useEffect(() => {
-    store.dispatch(fetchFavoriteOffers());
-  }, []);
-
-
   const authStatus = useAppSelector((state) => state.UTILITY.authorizationStatus);
   const favoriteOffers = useAppSelector((state) => state.OFFERS.favoriteOffers);
-  const isDataLoaded = useAppSelector((state) => state.OFFERS.areFavoriteOffersLoaded);
 
   if (authStatus !== AuthorizationStatus.Auth) {
     return <Navigate to={AppRoute.Login} />;
-  }
-
-  if (!isDataLoaded) {
-    return (
-      <LoadingScreen />
-    );
   }
 
   const isEmpty = favoriteOffers.length === 0;

@@ -8,9 +8,7 @@ type InitialState = {
   offersList: Offer[],
   isDataLoaded: boolean,
   currentOffer: Offer | null,
-  nearbyOffers: Offer[],
   favoriteOffers: Offer[],
-  areFavoriteOffersLoaded: boolean,
 }
 
 const initialState: InitialState = {
@@ -18,9 +16,7 @@ const initialState: InitialState = {
   offersList: [],
   isDataLoaded: false,
   currentOffer: null,
-  nearbyOffers: [],
   favoriteOffers: [],
-  areFavoriteOffersLoaded: false,
 };
 
 export const offers = createSlice({
@@ -37,21 +33,24 @@ export const offers = createSlice({
     loadOffer: (state, action) => {
       state.currentOffer = action.payload;
     },
-    loadNearbyOffers: (state, action) => {
-      state.nearbyOffers = action.payload;
+    updateCurrentOffer: (state, action) => {
+      if (state.currentOffer && action.payload.id === state.currentOffer.id) {
+        state.currentOffer = action.payload;
+      }
     },
     loadFavoriteOffers: (state, action) => {
       state.favoriteOffers = action.payload;
-      state.areFavoriteOffersLoaded = true;
     },
     updateOfferFavoriteStatus: (state, action) => {
       const index = state.offersList.findIndex((offer) => offer.id === action.payload.id);
       if (index !== -1) {
-        state.offersList[index].isFavorite = !state.offersList[index].isFavorite;
+        state.offersList = [...state.offersList.slice(0, index), action.payload, ...state.offersList.slice(index + 1)];
       }
-      state.favoriteOffers = state.favoriteOffers.filter((offer) => offer.id !== action.payload.id);
+      state.favoriteOffers = action.payload.isFavorite ?
+        [...state.favoriteOffers, action.payload] :
+        state.favoriteOffers.filter((offer) => offer.id !== action.payload.id);
     },
   },
 });
 
-export const {changeCityAction, loadOffers, loadOffer, loadNearbyOffers, loadFavoriteOffers, updateOfferFavoriteStatus} = offers.actions;
+export const {changeCityAction, loadOffers, loadOffer, loadFavoriteOffers, updateOfferFavoriteStatus, updateCurrentOffer} = offers.actions;
