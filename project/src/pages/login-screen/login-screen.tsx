@@ -23,9 +23,19 @@ function LoginScreen(): JSX.Element {
 
   const onSubmit = (authData: AuthData) => dispatch(loginAction(authData));
 
+  const passwordIsValid = (password: string) => {
+    const letterCheck = /[A-Za-z]/;
+    const numberCheck = /[0-9]/;
+    return letterCheck.test(password) && numberCheck.test(password);
+  };
+
   const onPasswordChange = () => {
     if (passwordRef.current !== null && isEmpty(passwordRef.current.value)) {
       passwordRef.current.setCustomValidity('Password can\'t consist of spaces');
+    } else if (passwordRef.current !== null && !passwordIsValid(passwordRef.current.value)) {
+      passwordRef.current.setCustomValidity('Passwords must contain: a minimum of 1 letter and of 1 number');
+    } else if (passwordRef.current !== null ) {
+      passwordRef.current.setCustomValidity('');
     }
   };
 
