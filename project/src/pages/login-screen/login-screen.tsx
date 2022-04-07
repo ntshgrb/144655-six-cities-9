@@ -87,6 +87,7 @@ function LoginScreen(): JSX.Element {
                   name="email"
                   placeholder="Email"
                   required
+                  data-testid="login"
                 />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
@@ -99,6 +100,7 @@ function LoginScreen(): JSX.Element {
                   name="password"
                   placeholder="Password"
                   required
+                  data-testid="password"
                 />
               </div>
               <button className="login__submit form__submit button" type="submit">Sign in</button>

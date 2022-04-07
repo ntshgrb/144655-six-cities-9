@@ -9,10 +9,10 @@ import {APIRoute} from '../const';
 import {State} from '../types/state';
 import {AuthData} from '../types/auth-data';
 import {listsLength, makeFakeOffersList, makeFakeOffer, makeReviewsList, makeFakeComment} from '../utils/mocks';
-import { loadFavoriteOffers, loadOffer, loadOffers, updateCurrentOffer, updateOfferFavoriteStatus } from './reducers/offers';
+import {loadFavoriteOffers, loadOffer, loadOffers, updateCurrentOffer, updateOfferFavoriteStatus} from './reducers/offers';
 import {datatype} from 'faker';
-import { loadNearbyOffers, updateNearbyOffers } from './reducers/nearby-offers';
-import { loadReviews, sendReviews } from './reducers/reviews';
+import {loadNearbyOffers, updateNearbyOffers} from './reducers/nearby-offers';
+import {loadReviews, sendReviews} from './reducers/reviews';
 
 const mockOffers = makeFakeOffersList(listsLength.OffersLength);
 const mockOffersNearby = makeFakeOffersList(listsLength.OffersNearby);

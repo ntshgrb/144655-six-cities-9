@@ -14,7 +14,7 @@ export const makeFakeOffer = (): Offer => ({
     name: address.city(),
   },
   description: lorem.word(7),
-  goods: new Array(3).fill(null).map(() => lorem.word(1)),
+  goods: new Array(3).fill(null).map(() => datatype.string()),
   host: {
     avatarUrl: image.imageUrl(),
     id: datatype.number(),
@@ -22,7 +22,7 @@ export const makeFakeOffer = (): Offer => ({
     name: name.title(),
   },
   id: datatype.number(),
-  images: new Array(3).fill(null).map(() => image.imageUrl()),
+  images: new Array(3).fill(null).map(() => datatype.string()),
   isFavorite: datatype.boolean(),
   isPremium: datatype.boolean(),
   location: {
